@@ -305,20 +305,23 @@ Download file yang sudah termasuk Apache HTTP Server (httpd) dan sesuai platform
     
     [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
 	
+
 Test HA cluster
 ---------------
 
 Kita akan test HA Cluster dengan beberapa scenario:
 
-1. Load balancing HTTP request. Kita akan gunakan browser untuk mengakses suatu aplikasi ke IP & port dari HTTP server (load balancer). Kita harapkan load balancer akan mengarahkan request ke masing-masing server JBoss EAP secara seimbang (load balance)
-2. Failed over HTTP request. Kita akan matikan salah satu server JBoss EAP lalu akses aplikasi IP & port dari HTTP server (load balancer). Kita harapkan load balancer dapat selalu mengarahkan request ke server yang hidup, sehingga kita tidak pernah mendapatkan error karena tidak dapat terkoneksi ke server yang dimatikan. 
-3. Kita juga akan lihat bahwa session antar server JBoss EAP akan saling terreplikasi.
+  - Load balancing HTTP request. Kita akan gunakan browser untuk mengakses suatu aplikasi ke IP & port dari HTTP server (load balancer). Kita harapkan load balancer akan mengarahkan request ke masing-masing server JBoss EAP secara seimbang (load balance)
+  - Failed over HTTP request. Kita akan matikan salah satu server JBoss EAP lalu akses aplikasi IP & port dari HTTP server (load balancer). Kita harapkan load balancer dapat selalu mengarahkan request ke server yang hidup, sehingga kita tidak pernah mendapatkan error karena tidak dapat terkoneksi ke server yang dimatikan. 
+  - Kita juga akan lihat bahwa session antar server JBoss EAP akan saling terreplikasi.
+
+
 
 1. Untuk keperluan test, kita perlu mendeploy suatu aplikasi di masing-masing server JBoss EAP. Download aplikasi WAR dari URL berikut:
    
    ```
    cd /home/jboss-as/
-   wget http://https://github.com/ejlp12/jboss-eap-workshop-site/cluster-test.war
+   wget https://github.com/ejlp12/jboss-eap-workshop-site/raw/master/resources/cluster-test.war
    ```
    
 2. Deploy file `cluster-test.war` ke masing-masing server JBoss EAP dengan meng-copy file ke direktory `deployment`

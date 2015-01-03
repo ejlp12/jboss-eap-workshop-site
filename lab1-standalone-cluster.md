@@ -348,18 +348,18 @@ Kita akan test HA Cluster dengan beberapa scenario:
    
 5. Stop salah satu server, misalnya server1 dengan cara berikut:
    
-   ``sh
+   ```sh
    cd /home/jboss-as/jboss-eap-6.3/bin
    ./jboss-cli.sh
-   ``
+   ```
    
    Setelah masuk ke mode command line inteface (CLI) dengan mendapatkan prompt `[disconnected /]`
    Jalankan perintah berikut
    
-   ``
+   ```
    connect localhost:10199
    shutdown
-   ``
+   ```
    
    > Port default untuk management adalah 9999, port management pada server1 adalah 10199 (9999 + 100)
    > karena offset port server1 adalah 100

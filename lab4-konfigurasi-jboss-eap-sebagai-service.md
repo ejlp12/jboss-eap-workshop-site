@@ -39,22 +39,22 @@ Jika anda ingin melihat dokumentasi terkait setting JBoss EAP sebagai Service di
 
    Uncomment konfigurasi jadi seperti ini:
    
-```
-# General configuration for the init.d scripts,
-# not necessarily for JBoss AS itself.
+    ```
+    # General configuration for the init.d scripts,
+    # not necessarily for JBoss AS itself.
+    
+    # The username who should own the process.
+    JBOSS_USER=jboss-as
 
-# The username who should own the process.
-JBOSS_USER=jboss-as
+    # The amount of time to wait for startup
+    STARTUP_WAIT=30
+    
+    # The amount of time to wait for shutdown
+    SHUTDOWN_WAIT=30
 
-# The amount of time to wait for startup
-STARTUP_WAIT=30
-
-# The amount of time to wait for shutdown
-SHUTDOWN_WAIT=30
-
-# Location to keep the console log
-JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log
-```
+    # Location to keep the console log
+    JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log
+    ```
 
 5. Tambahkan user `jboss-as`, dan direktori untuk log serta untuk menyimpan pid file. Jalankan command ini dari user `root`
 

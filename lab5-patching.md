@@ -75,5 +75,29 @@ Proses patch yang dijelaskan disini dapat dilakukan pada JBoss EAP versi 6.2 kea
   ```
   
   4. Restart JBoss EAP
+  5. Login ke [Admin Console http://localhost:9990](http://localhost:9990), anda akan lihat di bagian atas halaman awal 
+     muncul tampilan versi yaitu `6.3.3.GA`
+  
+
+Rollback Patch
+--------------
+
+Sekarang kita coba untuk melakukan rollback patch yang sudah dipasang. Kita butuh nilai `patch-id` yang dapat dilihat 
+dari output perintah `patch history` pada CLI.
+
+```
+[standalone@localhost:9999/] patch rollback --patch-id=jboss-eap-6.2.3.CP --reset-configuration=true
+{
+    "outcome" : "success",
+    "response-headers" : {
+        "operation-requires-restart" : true,
+        "process-state" : "restart-required"
+    }
+}
+```
+
+Anda perlu restart setelah melakukan rollback path.
+
+  
    
    

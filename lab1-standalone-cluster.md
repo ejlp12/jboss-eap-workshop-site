@@ -22,11 +22,11 @@ Instalasi JBoss EAP
 
 Karena kita akan menggunakan mesin yang sama, maka instalasi hanya diperlukan sekali tapi nantinya kita akan jalankan 2 server dengan konfigurasi sendiri-sendiri. Masing-masing server yang jalan di mesin yang sama akan menggunakan port yang berbeda. Lain halnya jika kita menggunakan mesin yang berbeda, kita dapat menggunakan port yang sama (sebaiknya memang kita set menggunakan port yang sama untuk kemudahaan administrasi).
 
-1. Login sebagai `root` kemudian tambahkan user `jboss-as` dan set password-nya. Lalu login dengan user `jboss-as`
+1. Login sebagai `root` kemudian tambahkan user `jboss` dan set password-nya. Lalu login dengan user `jboss`
     
     ```sh
-    adduser jboss-as
-    passwd jboss-as
+    adduser jboss
+    passwd jboss
     su - jboss
     ```
 
@@ -39,7 +39,7 @@ Karena kita akan menggunakan mesin yang sama, maka instalasi hanya diperlukan se
  3. Instal JBoss EAP di direktori `/home/jboss` dengan mengekstrak file zip
 
     ```sh
-    unzip jboss-eap-6.3.0.GA.zip -d /home/jboss-as/
+    unzip jboss-eap-6.3.0.GA.zip -d /home/jboss/
     ```
     
 
@@ -47,14 +47,14 @@ Karena kita akan menggunakan mesin yang sama, maka instalasi hanya diperlukan se
 Mempersiapkan Dua Server EAP
 ----------------------------
 
-Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. Lalu edit file konfigurasi `standaline-ha.conf` yang ada di direktori `/home/jboss-as/standalone/configuration`
+Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. Lalu edit file konfigurasi `standaline-ha.conf` yang ada di direktori `/home/jboss-as/jboss-eap-6.3/standalone/configuration`
 
 1.  Buat dua folder konfigurasi untuk masing-masing server EAP.
    
     Jika anda menggunakan mesin yang sama, copy dahulu direktori `standalone/` menjadi `standalone-server1/` dan `standalone-server2/`
 
 	```sh
-	cd /home/jboss-as/jboss-eap-6.3/
+	cd /home/jboss/jboss-eap-6.3/
 	cp -R standalone standalone-server1
 	cp -R standalone standalone-server2
 	```
@@ -108,7 +108,7 @@ Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. 
 	  
 4.  Untuk memudahkan menjalankan kedua server tersebut, kita buat script berikut:
  
-    Buat file startserver1.sh di direktori instalasi `/home/jboss-as/jboss-eap-6.3/`
+    Buat file startserver1.sh di direktori instalasi `/home/jboss/jboss-eap-6.3/`
 
 	```
 	!/bin/bash

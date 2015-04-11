@@ -33,7 +33,7 @@ Jika anda ingin melihat dokumentasi terkait setting JBoss EAP sebagai Service di
    ln -s /home/jboss/jboss-eap-6.3/bin/init.d/jboss-as.conf /etc/jboss-as/jboss-as.conf
    ```
 
-4. Edit file `/etc/jboss-as.conf`
+4. Edit file `/etc/jboss-as.conf` menggunakan editor yang anda kuasai, bisa `gedit`, `vi` atau `nano`
 
    `gedit /etc/jboss-as.conf`
 
@@ -47,7 +47,7 @@ Jika anda ingin melihat dokumentasi terkait setting JBoss EAP sebagai Service di
     JBOSS_USER=jboss-as
 
     # The amount of time to wait for startup
-    STARTUP_WAIT=30
+    STARTUP_WAIT=10
     
     # The amount of time to wait for shutdown
     SHUTDOWN_WAIT=30
@@ -95,7 +95,7 @@ Jika anda ingin melihat dokumentasi terkait setting JBoss EAP sebagai Service di
 9. Jika saat start diatas hasilnya [FAILED], coba cek log atau console output di `/var/log/jboss-as/console.log`
    
    ```
-   cat /var/log/jboss-as/console.log |less
+   cat /var/log/jboss-as/console.log |more
    ```
    
     

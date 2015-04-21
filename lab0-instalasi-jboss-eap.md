@@ -205,9 +205,34 @@ Eksplorasi JBoss EAP
 	
 	Kita dapat mengubah nilai Xms, Xmx dan XX:MaxPermSize sesuai kebutuhan.
 	
-6.
-    
+6.  Masuk ke direktori `/home/jboss/EAP-6.4/modules`, anda akan mendapatkan banyak sekali direktori yang berisi module.
+	
+	Sebuah modul biasanya disimpan dalam organisasi direktori yang strukturnya mengikuti Java package, misalnya module untuk dom4j disimpan di direktori `<EAP_INSTALL_DIR>/modules/system/layers/base/org/dom4j/`. Didalam direktori terbut terdapat folder `main` dengan isi library (file JAR) dan metadata dari module tersebut yaitu file `module.xml`
 
+	Berikut contoh isi file `module.xml`
+	
+	```
+      <?xml version="1.0" encoding="UTF-8"?>
+      <module xmlns="urn:jboss:module:1.1" name="org.dom4j">
+        <properties>
+          <property name="jboss.api" value="unsupported"/>
+        </properties>
+        <resources>
+          <resource-root path="dom4j-1.6.1.redhat-6.jar"/>
+              <!-- Insert resources here -->
+        </resources>
+        <dependencies>
+            <module name="javax.api"/>
+            <module name="com.sun.xml.bind"/>
+            <module name="javax.xml.bind.api"/>
+            <module name="org.jaxen"/>
+        </dependencies>
+      </module>	
+	
+	```
+    
+7.  Masuk ke direktori `welcome-content`, di direktori ini terdapat file-file default yang akan ditampilkan jika kita mengakses halaman web (default halaman web adalah http://localhost:8080)
+8.  
 
 
    

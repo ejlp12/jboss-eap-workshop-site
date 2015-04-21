@@ -334,6 +334,7 @@ Download mod_cluster untuk windows x86
     
     [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
 
+![Tampilan mod_cluster_manager](https://cloud.githubusercontent.com/assets/3068071/7254245/ff17c642-e86b-11e4-8206-2be8ddcdb2c8.png)
 
 Test HA cluster
 ---------------

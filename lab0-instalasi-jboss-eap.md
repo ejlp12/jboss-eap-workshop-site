@@ -179,7 +179,7 @@ Eksplorasi JBoss EAP
 	
 2. Lihat file log dengan menggunakan editor atau perintah `tail`. 
 
-   	```
+	```
     tail -f /home/jboss/EAP-6.4/standalone/log/server.log
 	```
 	
@@ -196,7 +196,19 @@ Eksplorasi JBoss EAP
 	pada contoh diatas PROSESS_ID adalah `1237`
 	
 	Jika hanya ada satu proses java, anda bisa menstop proses dengan perintah `killall java`
+
+5. Masuk ke direktori `/home/jboss/EAP-6.4/bin` yang berisi beberapa script untuk menjalankan JBoss EAP, mengakses ke command line interface (CLI), dan juga direktori `init.d` yang menyimpan script untuk menjalankan JBoss EAP sebagai service di Linux.
+
+	Buka dan lihat file `standalone.conf` atau di Windows file tersebut bernama `standalone.conf.bat`, lihat baris yang menunjukan setting minimum dan maximum heap size: 
 	
+	`JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"`
+	
+	Kita dapat mengubah nilai Xms, Xmx dan XX:MaxPermSize sesuai kebutuhan.
+	
+6.
+    
+
+
 
    
 

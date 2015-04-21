@@ -256,7 +256,9 @@ Bisa kita lihat konfigurasi JGroups dibawah ini. Konfigurasi ini sudah sedikir d
         </subsystem>
 ```
 
-Jika anda menggunakan protocol TCP dan menggunakan mesin yang berbeda, ganti nilai element `property` dengan name `initial_host` sesuai IP address dari masing-masing mesin, misalnya `192.168.0.12[7600],192.168.0.13[7600]`
+Jika anda menggunakan protocol TCP dan menggunakan mesin yang berbeda, ganti nilai element `property` dengan name `initial_host` sesuai IP address dari masing-masing mesin, misalnya `192.168.0.12[7600],192.168.0.13[7600]`.
+
+Nilai 7600 adalah port dari __jgroups-tcp__ yang dispesifikasikan pada element `socket-binding-group`
 
 #### Socket Binding
 
@@ -280,7 +282,9 @@ Jika kita ingin penggunaan TCP port, bukan multicast (UDP), maka pastikan pada f
 Instalasi dan Konfigurasi JBoss Web Server dan mod_cluster
 ----------------------------------------------------------
 
-Untuk platform Windows lihat guide di sub-section setelah ini
+Untuk platform Windows lihat di sub-bab setelah ini.
+
+>> PERHATIAN: Default port dari HTTP server mod_cluster yang didownload adalah 6666. Jika anda menggunakan browser Google Chrome, anda akan mendapatkan error __ERR_UNSAFE_PORT__ karena port tersebut dianggap tidak aman. Agar port tersebut tidak diblok maka anda dapat menambahkan opsi misalnya `–explicitly-allowed-ports=6666,6667` pada shortcut dari aplikasi Chrome.
 
 Saat penulisan artikel ini, versi terakhir JBoss Web Server adalah versi 2.1.0 dan kita akan gunakan versi tersebut dalam LAB ini.
 
@@ -389,7 +393,7 @@ Kita akan test HA Cluster dengan beberapa scenario:
    > Port default untuk management adalah 9999, port management pada server1 adalah 10199 (9999 + 100)
    > karena offset port server1 adalah 100
    
-   Akses halaman [http://localhost/cluster-test](http://localhost/cluster-test) secara berkali-kali dan 
+   Akses halaman [http://localhost:6666/cluster-test](http://localhost:6666/cluster-test) secara berkali-kali dan 
    perhatikan nama dari "nodeId" untuk melihat efek dari matinya server1.
    
 

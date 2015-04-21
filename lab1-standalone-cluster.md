@@ -280,6 +280,8 @@ Jika kita ingin penggunaan TCP port, bukan multicast (UDP), maka pastikan pada f
 Instalasi dan Konfigurasi JBoss Web Server dan mod_cluster
 ----------------------------------------------------------
 
+Untuk platform Windows lihat guide di sub-section setelah ini
+
 Saat penulisan artikel ini, versi terakhir JBoss Web Server adalah versi 2.1.0 dan kita akan gunakan versi tersebut dalam LAB ini.
 
 Download Apache HTTP Server dari JBoss Web Server versi Enterprise dari website [Red Hat](https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes) sesuai dengan platform yang and a pakai. Untuk LAB ini silakan download file dari link __Red Hat JBoss Web Server 2.1.0 Apache HTTP Server for RHEL 7 x86_64__
@@ -304,7 +306,30 @@ Download file yang sudah termasuk Apache HTTP Server (httpd) dan sesuai platform
     ke URL berikut:
     
     [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
-	
+
+Mod_cluster di Windows
+----------------------
+
+Download mod_cluster untuk windows x86
+
+[mod_cluster-1.2.6.Final-windows-x86.zip](http://downloads.jboss.org/mod_cluster//1.2.6.Final/windows/mod_cluster-1.2.6.Final-windows-x86.zip)
+
+1. Ekstrak file `mod_cluster-1.2.6.Final-windows-x86-ssl.zip` di direktori --misalnya-- `D:\httpd-2.2`
+2. Buka command prompt dengan user Administrator (run as Administrator)
+3. Masuk ke direktori tersebut dan jalankan `installconf.bat`
+
+	```
+	D:\
+	cd httpd-2.2\bin
+    installconf.bat
+	```
+4. Jalankan Web Server dengan perintah `httpd.exe`
+5. Modul mod_cluster secara default sudah terinstal dan terkonfigurasi sebagai modul Apache HTTP server. 
+    Kita sekarang bisa cek JBoss EAP cluster yang sudah terdeteksi oleh  Apache HTTP server dengan mengakses 
+    ke URL berikut:
+    
+    [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
+
 
 Test HA cluster
 ---------------

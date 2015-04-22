@@ -334,6 +334,16 @@ Tentu di 2 mesin tersebut kita instal dahulu JBoss EAP kemudian kita ikuti langk
     ```
       <host name="machinea" xmlns="urn:jboss:domain:1.6">
     ``` 
+Lalu set secret value untuk authentication ke Domain Controller sesuai dengan nilai yang sudah kita simpan pada langkah sebelumnya:
+
+    ```
+    ...
+    <security-realm name="ManagementRealm">
+      <server-identities>
+         <secret value="UGFzc3cwcmQh"/>
+      </server-identities> 
+    ...
+    ```
 
     Pada file ini didefinisikan alamat IP atau hostname dan port dari host-master atau Domain Controller, anda bisa lihat seperti ini. Variabel `${jboss.domain.master.address}` dapat kita set disitu atau kita spesifikasikan dengan menggunakan command line argument. Kita akan spesifikasikan pada command line argument di langkah berikutnya.
    
@@ -370,22 +380,10 @@ Tentu di 2 mesin tersebut kita instal dahulu JBoss EAP kemudian kita ikuti langk
     [Host Controller] 00:53:56,976 INFO  [org.jboss.as.domain] (Host Controller Service Threads - 30) JBAS010918: Registered remote slave host "machine-a", JBoss EAP 6.3.0.GA (AS 7.4.0.Final-redhat-19)
     ```
 
+	Yang menunjukan bahwa host machine-a sudah sukses bergabung (join) dengan Domain Controller
     
     >> Pada kondisi nyata dimana Domain Controler atau master-host berbeda mesin dengan mesin anggota cluster maka nilai 127.0.0.1 harus diubah dengan IP address dari master-host.
 
-5. Saat Host Controller jalan, maka ia akan melakukan koneksi ke Domain Controller dengan credential yang telah diset di `host-slave.xml`
-
-    ```
-    ...
-    <security-realm name="ManagementRealm">
-      <server-identities>
-         <secret value="UGFzc3cwcmQh"/>
-      </server-identities> 
-    ...
-    ```
-
-
-
-6. Lakukan langkah 1 sampai 5 sekali lagi, kali ini untuk Mesin-B dengan nama direktori `domain-machine-b` dan nama host `machineb`. Gunakan nama server yang berbeda yaitu `server-three` dan `server-four` dan juga gunakan port-offset yang berbeda misalnya 400 dan 500 karena anda akan menjalankan server tersebut di mesin laptop/PC yang sama, jadi nomor port jangan sampai bentrok.
+5. Lakukan langkah 1 sampai 4 sekali lagi, kali ini untuk Mesin-B dengan nama direktori `domain-machine-b` dan nama host `machineb`. Gunakan nama server yang berbeda yaitu `server-three` dan `server-four` dan juga gunakan port-offset yang berbeda misalnya 400 dan 500 karena anda akan menjalankan server tersebut di mesin laptop/PC yang sama, jadi nomor port jangan sampai bentrok.
 
 

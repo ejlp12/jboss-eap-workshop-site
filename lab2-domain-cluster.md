@@ -87,7 +87,10 @@ File-file konfigurasi untuk setup domain ada di direktori `domain` didalam direk
  - File `host-slave.xml` adalah contoh file konfigurasi untuk sebuah mesin yang kita set sebagai application server yang akan kita deploy aplikasi dan bekerja menerima request dari pengguna aplikasi.
  - File `host.xml` adalah contoh file konfigurasi untuk sebuah mesin yang akan kita set sebagai Domain Controller tapi juga akan menjalankan application server yang akan menjalankan aplikasi.
 
-Sebelum kita mencoba menbuat environment seperti gambar diatas, kita akan coba dulu eksplor contoh konfigurasi tersebut dengan menjalankannya tanpa modifikasi sedikitpun.
+Contoh Konfigurasi Domain
+=========================
+
+Sebelum kita mencoba menbuat environment seperti gambar diatas, kita akan coba dulu eksplor contoh konfigurasi tersebut dengan menjalankannya __tanpa modifikasi sedikitpun__.
 
 Kita dapat menjalankan sebuah lingkungan cluster dengan arsitektur seperti ini dengan hanya satu perintah `domain.sh` dari `<direktori_installasi_jboss_eap>/bin/`. Semua komponen yang tergambar di arsitektur dibawah ini jalan di satu mesin.
 
@@ -133,6 +136,8 @@ Sekarang ikuti langkah-langkah berikut untuk menjalankan JBoss EAP dengan arsite
 
 3. Lalu klik menu "Domain" > "Server Groups" atau akses langsung ke URL: 
    [http://127.0.0.1:10190/console/App.html#server-groups](http://127.0.0.1:10190/console/App.html#server-groups)
+
+
    
    Lihat di halaman tersebut ada 2 server-group seperti yang terlihat gambar arsitektur diatas.
    

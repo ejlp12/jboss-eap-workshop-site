@@ -59,9 +59,9 @@ Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. 
 	cp -R standalone standalone-server2
 	```
 
-2.  Edit file `standalone-ha.conf` pada masing-masing direktori server1 dan server2 yaitu di `standalone-serverX/configuration/` (ganti X dengan 1 atau 2)
+2.  Edit file `standalone-ha.xml` pada masing-masing direktori server1 dan server2 yaitu di `standalone-serverX/configuration/` (ganti X dengan 1 atau 2)
     
-    Cari konfigurasi __modcluster__ seperti dibawah ini. Lalu ganti IP address yang tertera pada attribute `proxy-list`. Karena kita akan menginstal JBoss Web Server (Load balancer) pada mesin yang sama (localhost) yadi kita isi kan IP 127.0.0.1 dengan port default yaitu 6666.
+    Cari konfigurasi __modcluster__ seperti dibawah ini. Lalu ganti IP address yang tertera pada attribute __`proxy-list`__. Karena kita akan menginstal JBoss Web Server (Load balancer) pada mesin yang sama (localhost) yadi kita isi kan IP 127.0.0.1 dengan port default yaitu 6666.
     
 
 	```xml
@@ -79,7 +79,7 @@ Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. 
     > perlu mengubah konfigurasi agar menggunakan TCP, bukan UDP. Lihat di sub bab 
     > __Cluster Network__ dibawah untuk detil mengenai konfigurasi TCP. 
 	
-3.  __Selesai!__ Perubahan konfigurasi JBoss EAP hanya sesederhana itu, karena file konfigurasi untuk HA (cluster) telah tersedia pada default instalasi. Kita bisa menggunakan `standalone-ha.conf` atau `standalone-full-ha.conf` untuk tujuan LAB ini.
+3.  __Selesai!__ Perubahan konfigurasi JBoss EAP hanya sesederhana itu, karena file konfigurasi untuk HA (cluster) telah tersedia pada default instalasi. Kita bisa menggunakan `standalone-ha.xml` atau `standalone-full-ha.xml` untuk tujuan LAB ini.
 
     Sekarang kita jalankan kedua server tersebut. 
     

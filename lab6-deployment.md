@@ -88,3 +88,19 @@ Men-deploy aplikasi secara manual
 	6:57:14,505 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) JBAS015877: Stopped deployment jboss-shopping-cart-server.jar (runtime-name: jboss-shopping-cart-server.jar) in 10ms
 	06:57:14,535 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) JBAS015858: Undeployed "jboss-shopping-cart-server.jar" (runtime-name: "jboss-shopping-cart-server.jar")
 	```
+Mengatur lokasi Root Web
+========================
+
+Pada latihan ini, anda akan 'mematikan' halaman default (Welcome file) dari JBoss EAP
+
+1.  Pastikan EAP jalan dalam mode standalone, lalu deploy `jboss-helloworld.war`
+2.  Pastikan aplikasi jboss-helloworld sudah jalan dan bisa diakses dari [http://localhost:8080/jboss-helloworld](http://localhost:8080/jboss-helloworld)
+3.  Buka file konfigurasi `standalone.xml` lalu cari baris yang miliki elemen `<virtual-server>`, lalu ubah baris tersebut menjadi seperti ini:
+
+	```
+	<virtual-server name="default-host" enable-welcome-root="false" default-web-module="jboss-helloworld">
+	```
+
+	Set `enable-welcome-root` menjadi __false__ dan set `default-web-module` dengan aplikasi yang sudah di-deploy.
+
+>> Pada versi sebelumnya setting ini tidak bisa dilakukan dari Management Console, tapi di veri 6.4 anda juga dapat melakukan perubahan dari Mgmt Console. Anda bisa mengakses menu "Configuration" > "Web" > "Servlet/HTTP" > __Virtual Servers__, pilih default-host, klik Edit, kemudian ubah "Default Module"

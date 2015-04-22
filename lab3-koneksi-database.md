@@ -32,9 +32,7 @@ memang keduanya jalan di mesin yang berbeda.
    	telnet DATABASE_HOSTNAME 5432
    	```
 
-
-
-## Buat Module DJBC Driver di JBoss EAP
+## Buat Module JDBC Driver di JBoss EAP
 
 Download PostgreSQL JDBC driver dari https://jdbc.postgresql.org/download.html
 Jika kita menggunakan Java 1.7 atau maka download file driver JDBC41, sedangkan jika JRE yang digunakan adalah versi 1.6

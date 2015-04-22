@@ -384,6 +384,22 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
     
     >> Pada kondisi nyata dimana Domain Controler atau master-host berbeda mesin dengan mesin anggota cluster maka nilai 127.0.0.1 harus diubah dengan IP address dari master-host.
 
-5. Lakukan langkah 1 sampai 4 sekali lagi, kali ini untuk Mesin-B dengan nama direktori `domain-machine-b` dan nama host `machineb`. Gunakan nama server yang berbeda yaitu `server-three` dan `server-four` dan juga gunakan port-offset yang berbeda misalnya 400 dan 500 karena anda akan menjalankan server tersebut di mesin laptop/PC yang sama, jadi nomor port jangan sampai bentrok.
+5.  Lakukan langkah 1 sampai 4 sekali lagi, kali ini untuk Mesin-B dengan nama direktori `domain-machine-b` dan nama host `machineb`. Gunakan nama server yang berbeda yaitu `server-three` dan `server-four` dan juga gunakan port-offset yang berbeda misalnya 200 dan 300 karena anda akan menjalankan server tersebut di mesin laptop/PC yang sama, jadi nomor port jangan sampai bentrok.
+
+6.  Setup hingga hasil akhirnya dipatkan konfigurasi seperti ini:
+
+    ![image](https://cloud.githubusercontent.com/assets/3068071/7278432/a9b4d24c-e93f-11e4-8885-49df34292da4.png)
+   
+7.  Tes dengan men-deploy aplikasi `cluster-test.war`. Buka management console, klik menu "Deployment", klik tombol "Add" dan klik "Browse" untuk memilih file `cluster-test.war`. Klik Next kemudian Save. 
+
+8.  Pilih `cluster-test.war` di tabel content repository, lalu klik tombol "Assign". Pada window "Select server group" pilih `other-server-group` yaitu group yang profile-nya adalah `full-ha`. Klik Save.
+
+9. 
+   
+## Menyiapkan Load Balancer (Apache Web Server dengan mod_cluster add-on)
+
+Silakan dicoba sendiri, caranya hampir sama dengan pada saat anda mensetup untuk standalone-ha di LAB sebelumnya :-)
+
+	![image](https://cloud.githubusercontent.com/assets/3068071/7278786/cec78d8e-e941-11e4-80e0-5c2a49941e72.png)
 
 

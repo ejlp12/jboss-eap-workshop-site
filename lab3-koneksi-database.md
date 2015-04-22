@@ -38,10 +38,10 @@ Download PostgreSQL JDBC driver dari https://jdbc.postgresql.org/download.html
 Jika kita menggunakan Java 1.7 atau maka download file driver JDBC41, sedangkan jika JRE yang digunakan adalah versi 1.6
 download file driver JDBC4.
 
-1. Buat direktori `<EAP_INSTALL_DIR>/modules/system/layers/base/org/postgresql/main` untuk menyimpan file JDBC library yang akan di-load oleh EAP sebagai module. 
+1. Buat direktori `<EAP_INSTALL_DIR>/modules/postgresql/main` untuk menyimpan file JDBC library yang akan di-load oleh EAP sebagai module. 
 
 	```
-	cd <EAP_INSTALL_DIR>/modules/system/layers/base/org/
+	cd <EAP_INSTALL_DIR>/modules
 	mkdir postgresql/main
 	```
 
@@ -60,6 +60,8 @@ download file driver JDBC4.
 	 </dependencies>  
 	</module>
 	```
+	
+   Karakter pertama pada file tersebut tidak boleh spasi atau karakter lainnya tapi harus dimulai dengan `<?xml`
 
 3. Ubah file konfigurasi EAP yang digunakan (`standalone.xml`). 
    

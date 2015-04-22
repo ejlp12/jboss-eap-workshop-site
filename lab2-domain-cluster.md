@@ -394,12 +394,16 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
 
 8.  Pilih `cluster-test.war` di tabel content repository, lalu klik tombol "Assign". Pada window "Select server group" pilih `other-server-group` yaitu group yang profile-nya adalah `full-ha`. Klik Save.
 
-9. 
+9.  Pilih menu Deployment jika belum berada di halaman Deployment. Klik tab "SERVER GROUPS", kemudian pada tabel daftar server groups klik "View >" pada baris `other-server-group`. Anda bisa lihat daftar aplikasi yang sudah ter-deploy di `other-server-group`.
+
+10. Test aplikasi dengan mengaksed ke URL berikut
+    - server-two pada port (8080+150) -> [http://localhost:8230/cluster-test](http://localhost:8230/cluster-test)
+    - server-four pada port (8080+300) -> [http://localhost:8380/cluster-test](http://localhost:8380/cluster-test)
    
 ## Menyiapkan Load Balancer (Apache Web Server dengan mod_cluster add-on)
 
 Silakan dicoba sendiri, caranya hampir sama dengan pada saat anda mensetup untuk standalone-ha di LAB sebelumnya :-)
 
-	![image](https://cloud.githubusercontent.com/assets/3068071/7278786/cec78d8e-e941-11e4-80e0-5c2a49941e72.png)
+![image](https://cloud.githubusercontent.com/assets/3068071/7278786/cec78d8e-e941-11e4-80e0-5c2a49941e72.png)
 
 

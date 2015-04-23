@@ -124,6 +124,8 @@ Berikut langkah-langkah untuk memonitor menggunakan JConsole:
 
 	Jika port-offset tidak diset, berarti port yang harus kita gunakan adalah port 9999.
 	
+	![image](https://cloud.githubusercontent.com/assets/3068071/7292291/dceccc0c-e9c4-11e4-98bb-391df91a4f70.png)
+	
 	>> Kita juga dapat menggunakan __Local Process__ jika JConsole yang kita jalankan kita gunakan untuk memonitor atau mengeloala JBoss EAP yang jalan di mesin/host yang sama. Pilih  pada __Local Process__ list suatu proses dengan nama seperti ini `jboss-module.jar -mp /path/...` 
 
 3. Set username/password, lalu klik tombol "Connect"

@@ -13,9 +13,9 @@ koneksi ke database agar lebih efisien. Tiap objek koneksi yang ada di connectio
 membuatkoneksi ke database. Setiap database memiliki JDBC driver-nya masing-masing dan datasource perlu diset agar objek 
 koneksi bisa dibuat saat dibutuhkan.
 
-Konfigurasi web 
+Konfigurasi datasource bisa dilihat dan dibuat lewat Web Management Console di menu Configuration > Connector - Datasources
 
-[[ https://cloud.githubusercontent.com/assets/3068071/7330740/a4b9ab42-eb1e-11e4-9b93-91aadcef55f8.png | width = 400px height = 400px ]]
+<img src="https://cloud.githubusercontent.com/assets/3068071/7330740/a4b9ab42-eb1e-11e4-9b93-91aadcef55f8.png" height="500" width="500" >
 
 
 Datasource membutuhkan JDBC driver yang dibuat dalam sebuah module di direktori `module/`. Contoh struktur direktori sebuah

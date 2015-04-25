@@ -13,6 +13,11 @@ koneksi ke database agar lebih efisien. Tiap objek koneksi yang ada di connectio
 membuatkoneksi ke database. Setiap database memiliki JDBC driver-nya masing-masing dan datasource perlu diset agar objek 
 koneksi bisa dibuat saat dibutuhkan.
 
+Konfigurasi web 
+
+[[ https://cloud.githubusercontent.com/assets/3068071/7330740/a4b9ab42-eb1e-11e4-9b93-91aadcef55f8.png | width = 400px height = 400px ]]
+
+
 Datasource membutuhkan JDBC driver yang dibuat dalam sebuah module di direktori `module/`. Contoh struktur direktori sebuah
 module JDBC driver adalah seperti berikut
 
@@ -29,7 +34,7 @@ Ada beberapa cara untuk membuat atau mengkonfigurasi datasource di JBoss EAP, ya
 
 1. Cara manual dengan membuat module JDBC driver dan mengubah file konfigurasi XML.
 2. Dengan JBoss Command Line Interface (CLI). 
-
+3. Menggunakan web management console
 
 ## Pastikan mesin JBoss EAP dapat terkoneksi ke mesin Database
 
@@ -75,7 +80,11 @@ download file driver JDBC4.
 	
    Karakter pertama pada file tersebut tidak boleh spasi atau karakter lainnya tapi harus dimulai dengan `<?xml`
 
-3. Ubah file konfigurasi EAP yang digunakan (`standalone.xml`). 
+   Selai kita membuat module untuk JDBC driver.
+
+## Buat Konfigurasi Datasource
+
+3. Sekarang kita buat konfigurasi datasource dengan cara manual. Asumsi anda akan menjalankan Jboss EAP dalam mode standalone, maka ubah file konfigurasi EAP yang digunakan (`standalone.xml`). 
    
     Pada elemen `datasources` ubah konfigurasi datasource dengan `pool-name` ExampleDS menjadi seperti berikut:
 
@@ -102,6 +111,9 @@ download file driver JDBC4.
 	    ...
 	</drivers>
 	```
+
+    Selain cara manual diatas, kita juga bisa membuat datasource dari Web Management Console, dari menu 
+    Configuration > Connection > Datasource.
 
 4. Start atau restart JBoss EAP 
    

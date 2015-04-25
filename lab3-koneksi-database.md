@@ -18,17 +18,24 @@ Konfigurasi datasource bisa dilihat dan dibuat lewat Web Management Console di m
 <img src="https://cloud.githubusercontent.com/assets/3068071/7330740/a4b9ab42-eb1e-11e4-9b93-91aadcef55f8.png" height="500" width="500" >
 
 
-Datasource membutuhkan JDBC driver yang dibuat dalam sebuah module di direktori `module/`. Contoh struktur direktori sebuah
-module JDBC driver adalah seperti berikut
+Datasource membutuhkan JDBC driver, suatu JAR file yang bisa dikenali oleh EAP dengan dua cara yaitu:
 
-```
-modules
-│
-├── postgresql
-   └── main
-       ├── module.xml
-       └── postgresql-9.3-1102.jdbc4.jar
-```
+ 1. Men-deploy JDBC JAR file sebagai aplikasi. Cara ini lebih direkomendasikan karena lebih mudah dan dapat dengan mudah dilakukan pada arsitektur domain dimana memiliki banyak node di banyak host.
+    
+    Untuk dapat mendeploy JDBC JAR file, maka didalam JAR file diperlukan sebuah file bernama `java.sql.Driver` didalam direktori `META-INF/`. Isi file tersebut adalah fully qualified class name dari JDBC driver tersebut, misalnya untuk PostgreSQL adalah `org.postgresql.Driver` sedangkan untuk Oracle DB adalah `oracle.jdbc.OracleDriver`
+
+    >> Biasanya sebuah JDBC driver type-4, yang biasa digunakan sudah memiliki file tersebut, sehingga sudah bisa langsung kita deploy ke JBoss EAP tanpa perlu perubahan.
+
+ 2. Membuat JDBC sebagai module di direktori `module/`. Contoh struktur direktori sebuah module JDBC driver adalah seperti berikut:
+
+	```
+	modules
+	│
+	├── postgresql
+       └── main
+           ├── module.xml
+           └── postgresql-9.3-1102.jdbc4.jar
+    ```
 
 Ada beberapa cara untuk membuat atau mengkonfigurasi datasource di JBoss EAP, yaitu
 

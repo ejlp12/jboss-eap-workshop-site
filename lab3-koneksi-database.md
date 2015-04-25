@@ -7,11 +7,23 @@ datasource class.
 Sebelum melakukan konfigurasi JBoss EAP agar terkoneksi ke database, pertama tentu perlu dipastikan bahwa database sudah
 terinstall dan dapat diakses dari server EAP. 
 
-Untuk dapat terkoneksi ke database, biasanya aplikasi menggunakan datasource yang diakses menggunakan JNDI. Datasource 
-tersebut memberikan koneksi database kepada aplikasi. Datasource menggunakan connection-pool yang mengelola koneksi ke
-database agar lebih efisien. Tiap objek koneksi yang ada di connection-pool menggunakan JDBC driver untuk membuat koneksi
-ke database. Setiap database memiliki JDBC driver-nya masing-masing dan datasource perlu diset agar objek koneksi bisa
-dibuat saat dibutuhkan.
+Untuk dapat terkoneksi ke database, biasanya aplikasi menggunakan __datasource__ yang diakses menggunakan __JNDI__.
+Datasource tersebut memberikan koneksi database kepada aplikasi. Datasource menggunakan __connection-pool__ yang mengelola
+koneksi ke database agar lebih efisien. Tiap objek koneksi yang ada di connection-pool menggunakan __JDBC driver__ untuk 
+membuatkoneksi ke database. Setiap database memiliki JDBC driver-nya masing-masing dan datasource perlu diset agar objek 
+koneksi bisa dibuat saat dibutuhkan.
+
+Datasource membutuhkan JDBC driver yang dibuat dalam sebuah module di direktori `module/`. Contoh struktur direktori sebuah
+module JDBC driver adalah seperti berikut
+
+```
+modules
+│
+├── postgresql
+   └── main
+       ├── module.xml
+       └── postgresql-9.3-1102.jdbc4.jar
+```
 
 Ada beberapa cara untuk membuat atau mengkonfigurasi datasource di JBoss EAP, yaitu
 
@@ -125,7 +137,7 @@ download file driver JDBC4.
     Hasil dari perintah tersebut seperti ini:
     
 
-    ```
+    ```json
     {
 	    "outcome" => "success",
 	    "result" => [
@@ -163,7 +175,7 @@ download file driver JDBC4.
     /subsystem=datasources/data-source=ExampleDS:test-connection-in-pool
     ```
     
-    ```
+    ```json
     { 
        "outcome" => "success", 
        "result" => [true] 

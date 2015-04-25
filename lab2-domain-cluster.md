@@ -122,6 +122,9 @@ Kita dapat menjalankan sebuah lingkungan cluster dengan arsitektur seperti ini d
                                     '----------------------'
                                            server-group:
                                        (other-server-group)
+                                       
+                                       
+    Semua node tersebut jalan di satu host (mesin)
 ```
 
 Sekarang ikuti langkah-langkah berikut untuk menjalankan JBoss EAP dengan arsitektur tersebut dan mengeksplor konfigurasi serta prosesnya.
@@ -227,24 +230,56 @@ Langkah berikut menggunakan asumsi JBoss EAP anda diinstal di direktori `/home/j
     cd /home/jboss-eap
     cp domain domain-controller
     ```
-2.  Anda bisa hapus semua file di direktori `domain-controller/configuration/` dengan ekstensi `.xml` kecuali file `domain.xml` dan file `host-master.xml`
+2.  Buka file `domain.xml` di direktori `domain-controller/configuration/` dengan file editor. Di file ini kita akan melihat ada beberapa konfigurasi subsystem untuk masing-masing **profile** 
+
+	```
+	<profiles>
+        <profile name="default">
+        ...
+        </profile>
+        <profile name="ha">
+        ...
+        </profile>
+        <profile name="full">
+        ...
+        </profile>
+        <profile name="full-ha">
+        ...
+        </profile>
+	</profiles>
+
+	Artinya
+
+
+	Kemudian cari element `hornetq-server` di profile `ha` dan `full-ha`. Kita perlu menambahkan konfigurasi untuk hornetq engine pada konfigurasi cluster seperti ini:
+	
+	```
+	<hornetq-server>
+		<clustered>true</clustered>
+        <cluster-user>jms-user</cluster-user>
+        <cluster-password>simple-pass</cluster-password>
+		...
+	</hornetq-server>
+	```
+	
+3.  Anda bisa hapus semua file di direktori `domain-controller/configuration/` dengan ekstensi `.xml` kecuali file `domain.xml` dan file `host-master.xml`
     
-3. Jalankan Domain Controller atau master host dengan perintah berikut:
+4.  Jalankan Domain Controller atau master host dengan perintah berikut:
+
     ```
     ./bin/domain.sh -c domain.xml --host-config=host-master.xml -Djboss.domain.base.dir=domain-controller
     ```
-    Ada harus berada di direktori dimana JBoss EAP diinstall, yaitu di `/home/jboss-eap`
     
-    Jika anda berada di `/home/jboss-eap/bin` maka anda harus menjalankan perintah tersebut seperti ini:
+    Ada harus berada di direktori dimana JBoss EAP diinstall, yaitu di `/home/jboss-eap`.
+    Jika anda berada di `/home/jboss-eap/bin` maka perintah tersebut menjadi seperti ini:
 
     ```
     ./domain.sh -c domain.xml --host-config=host-master.xml -Djboss.domain.base.dir=../domain-controller
     ```    
     
-    
     Perintah tersebut akan menjalankan Process Controller dan Host Controller tanpa menjalankan satupun Server karena berbeda dengan file konfigurasi host default yaitu `host.xml`, file host yang digunakan pada perintah tersebut yaitu `host-master.xml` tidak memiliki element `<servers>...</servers>`
 
-4.  Buka file `host-master.xml` dengan editor atau file viewer, perhatikan disitu tidak ada elemen `<servers>...</servers>`
+5.  Buka file `host-master.xml` dengan editor atau file viewer, perhatikan disitu tidak ada elemen `<servers>...</servers>`
     Lihat juga bahwa file ini memiliki element
 
 	```
@@ -256,20 +291,22 @@ Langkah berikut menggunakan asumsi JBoss EAP anda diinstal di direktori `/home/j
 	
 	Perhatikan juga di file tersebut didefinisikan 2 server group yaitu `main-server-group` dan `other-server-group` dengan profile yang berbeda.
 
-5.  Eksplor proses Java yang ada pada sistem dengan perintah `ps ax |grep jboss`
+6.  Eksplor proses Java yang ada pada sistem dengan perintah `ps ax |grep jboss`
 	Anda akan mendapatkan 2 proses berikut
 	```
 	...java -D[Host Controller]...
 	...java -D[Process Controller]...
 	```
 
-5.  Eksplor web management console: [http://127.0.0.1:9990/](http://127.0.0.1:9990/)
-    [EAP v6.4] Klik menu Domain > Overview, perhatikan tidak ada server atau server group yang terlihat di halaman tersebut.
+7.  Eksplor web management console: [http://127.0.0.1:9990/](http://127.0.0.1:9990/)
+    [EAP v6.4] Klik menu Domain > Overview dan lihat pada tab TOPOLOGY, perhatikan tidak ada server atau server group yang terlihat di halaman tersebut.
+
     Lihat juga pada Domain > Server Groups, ada dua server groups di halaman tersebut seperti yang terlihat di `domain.xml`
    
     >> [EAP v6.3] dapat dilihat dimenu Domain dan Runtime > tab TOPOLOGY. 
 
 	Port web management console tersebut didefinisikan di `host-master.xml` pada baris berikut:
+	
 	```
 	 <http-interface security-realm="ManagementRealm">
         <socket interface="management" port="${jboss.management.http.port:9990}"/>
@@ -278,7 +315,7 @@ Langkah berikut menggunakan asumsi JBoss EAP anda diinstal di direktori `/home/j
     
     Nilai `${jboss.management.native.port:9999}` artinya port yang digunakan (default) adalah 9999 jika tidak dioveride dengan cara dispesifikasikan pada command line dengan opsi `-Djboss.management.native.port=XXXX` dimana XXXX adalah nilai yang akan menggantikan nilai 9999
 
-6.  SELESAI. Kita sudah menyipkan sebuah Domain Controller pada Mesin-X.
+8.  SELESAI. Kita sudah menyipkan sebuah Domain Controller pada Mesin-X.
 
 *  Nantinya semua EAP server yang ada di Mesin-A dan Mesin-B akan mengakses (tergabung ke) Domain Controller di Mesin-X ini melalui port 9990 yaitu port yang didefinisikan sebagai __native management port__
 
@@ -323,9 +360,10 @@ Tentu di 2 mesin tersebut kita instal dahulu JBoss EAP kemudian kita ikuti langk
     cd /home/jboss-eap 
     cp domain domain-machine-a
     ```
-   
 
 2.  Hapus atau ganti nama file `domain.xml` menjadi `domain.xml.backup`, agar file ini tidak dibaca saat JBoss EAP dijalankan. File tersebut tidak diperlukan pada mesin yang bertindak sebagai Slave.
+
+	Semua file `.xml` di direktori `domain-machine-a` dapat dihapus kecuali `host-slave.xml`. Server EAP yang akan jalan di Mesin-A ini akan menggunakan konfigurasi subsystem sesuai dengan konfigurasi profile yang ada di Cluster Domain yang di simpan di file `domain.xml`
 
 3.  Edit file `host-slave.xml` yang ada di direktori `domain-machine-a`
 
@@ -345,7 +383,7 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
     ...
     ```
 
-    Pada file ini didefinisikan alamat IP atau hostname dan port dari host-master atau Domain Controller, anda bisa lihat seperti ini. Variabel `${jboss.domain.master.address}` dapat kita set disitu atau kita spesifikasikan dengan menggunakan command line argument. Kita akan spesifikasikan pada command line argument di langkah berikutnya.
+    Pada file ini didefinisikan alamat IP atau hostname dan port dari host-master atau Domain Controller, anda bisa lihat seperti ini. 
    
     ```
     <domain-controller>
@@ -354,6 +392,7 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
                security-realm="ManagementRealm"/>
     </domain-controller>
     ```
+    Variabel `${jboss.domain.master.address}` dapat kita set disitu atau kita spesifikasikan dengan menggunakan command line argument, jika kita tulis seperti ini `${jboss.domain.master.address:192.168.0.1}` artinya jika kita tidak didefinisikan di command line argument parameter `jboss.domain.master.address` maka nilai defaultnya adalah `192.168.0.1`. Kita akan lihat nanti pada saat kita jalankan `domain.sh` kita spesifikasikan pada command line argument nilai ini.
     
     Karena kita akan setup 2 JBoss EAP server di Mesin-A dengan nama `server-one` dan `server-two`, maka pastikan kita memdefinisikan kedua server tersebut seperti ini:
     
@@ -363,10 +402,11 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
             <socket-bindings port-offset="200"/>
         </server>
         <server name="server-two" group="other-server-group">
-            <socket-bindings port-offset="350"/>
+            <socket-bindings port-offset="300"/>
         </server>
     </servers>
     ```
+    Kedua server teresebut harus menggunakan `port-offset` yang berbeda agar penggunaan port tidak bentrok. 
 
 4. Jalankan dengan perintah berikut
 

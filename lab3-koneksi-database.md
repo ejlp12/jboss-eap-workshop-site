@@ -203,22 +203,55 @@ download file driver JDBC4.
     
 ## Cara membuat DataSource dan JDBC driver module dengan command-line
 
-Berikut cara membuat driver module dan datasource dengan menggunakan `jboss-cli.sh`
+Berikut cara membuat driver module dan datasource dengan menggunakan CLI. Kali ini kita akan buat datasource untuk koneksi ke database MySQL.
 
-1. Setelah masuk dan terkonsi ke EAP dengan menggunakan JBoss CLI lakukan perintah berikut untuk membuat module JDBC:
+1.  Download [MySQL DJBC driver (Connector/J)](http://dev.mysql.com/downloads/connector/j/). Pilih 'Platform Independent' driver, download ZIP atau tar.gz file, kemudian ekstrak dan copy file `mysql-connector-java-X.X.X-bin.jar` ke direktori `/tmp`
+
+2.  Pastikan JBoss EAP sudah jalan dalam mode standalone. Setelah masuk dan terkonsi ke EAP dengan menggunakan JBoss CLI lakukan perintah berikut untuk membuat module JDBC: 
 
 	```
-	module add --name=org.mysql --resources=/path/to/mysql-connector-java-5.1.18-bin.jar --dependencies=javax.api,javax.transaction.api
+	[standalone@localhost:9999 /] module add --name=com.mysql --resources=/tmp/mysql-connector-java-5.0.8-bin.jar --dependencies=javax.api,javax.transaction.api
+	```
+	
+	Perintah tersebut akan membuat direktori `<EAP_INSTALL_DIR>/modules/org/mysql/main/`, meng-copy file JAR ke direktori tersebut dan  secara otomatis membuat file `module.xml`
+
+3. Restart JBoss EAP dengan perintah berikut pada CLI
+
+	```
+	[standalone@localhost:9999 /] :shutdown(restart=true)
 	```
 
-	Pastikan JDBC driver file ada di `/path/to`. Perintah tersebut akan membuat direktori `<EAP_INSTALL_DIR>/modules/org/mysql/main/`, meng-copy file JAR ke direktori tersebut dan  secara otomatis membuat file `module.xml`
+4.  Buat file text dengan nama `create-mysql-ds.cli` yang isinya sebagai berikut:
 
-2. Buat deklarasi datasource dan driver di file konfigurasi EAP dengan cara memberikan perintah berikut di CLI prompt: 
-
-	``` 
-	/subsystem=datasources/jdbc-driver=mysql:add(driver-module-name=org.mysql,driver-name=mysql,driver-class-name=com.mysql.jdbc.Driver)
+	```
+	connect
+	batch
+	
+	/subsystem=datasources/jdbc-driver=mysql:add( \
+	driver-module-name=org.mysql, \
+	driver-name=mysql, \
+	driver-class-name=com.mysql.jdbc.Driver)
 	 
-	/subsystem=datasources/data-source=MySQLDS:add(jndi-name=java:jboss/datasources/MySQLDS, driver-name=mysql, connection-url=jdbc:mysql://localhost:3306/dbdev,user-name=root,password=admin)
+	/subsystem=datasources/data-source=MySQL_DS:add( \
+	jndi-name=java:jboss/datasources/MySQL_DS, \
+	driver-name=mysql, \
+	connection-url=jdbc:mysql://localhost:3306/dbdev, \
+	user-name=root, \
+	password=admin)
+	
+	run-batch
+	:reload
 	```
-3. Ada bisa test dengan cara yang sama dengan cara sebelumnya dan bisa cek konfigurasi file XML dari EAP yang sudah berubah, mirip seperti saat kita buat datasource manual.
 
+	Kemudian jalankan dengan perintah
+	
+	```
+	jboss-cli.sh --file=create-mysql-ds.cli
+	```
+ 
+5.  Anda bisa test dengan cara yang sama dengan cara sebelumnya dan bisa cek konfigurasi file XML dari EAP yang sudah berubah, mirip seperti saat kita buat datasource manual atau lewat Web Management Console.
+
+	- Login ke Web Mangement Console, navigasikan ke menu Configuration, klik Connecor > Datasources
+	- Klik MySQL_DS, kemudian klik tab Connection lalu klik tombol "Test Connection"
+	
+	

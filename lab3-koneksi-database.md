@@ -330,3 +330,4 @@ Untuk dapat mendeploy JDBC JAR file, maka didalam JAR file diperlukan sebuah fil
 	- allocation-retry
 	- allocation-retry-wait-millis
 	
+	Anda bisa lihat juga penjelasan detil mengenai konfigurasi datasource di [dokumentasi](https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/sect-Datasource_Configuration.html)

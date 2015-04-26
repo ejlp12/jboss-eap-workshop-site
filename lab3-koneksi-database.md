@@ -253,5 +253,80 @@ Berikut cara membuat driver module dan datasource dengan menggunakan CLI. Kali i
 
 	- Login ke Web Mangement Console, navigasikan ke menu Configuration, klik Connecor > Datasources
 	- Klik MySQL_DS, kemudian klik tab Connection lalu klik tombol "Test Connection"
+
 	
+## Mendeploy JDBC driver dan membuat Datasource dari Web Management Console.
+
+JDBC driver dapat dideploy ke JBoss EAP sebagaimana aplikasi WAR atau EAR untuk kemudian digunakan oleh datasource. Seperti
+yang telah disebutkan diawal...
+
+"""
+Cara ini lebih direkomendasikan karena lebih mudah dan dapat dengan mudah dilakukan pada arsitektur domain dimana memiliki
+banyak node di banyak host.
+    
+Untuk dapat mendeploy JDBC JAR file, maka didalam JAR file diperlukan sebuah file bernama `java.sql.Driver` didalam direktori
+`META-INF/`. Isi file tersebut adalah fully qualified class name dari JDBC driver tersebut, misalnya untuk PostgreSQL adalah
+`org.postgresql.Driver` sedangkan untuk Oracle DB adalah `oracle.jdbc.OracleDriver`
+"""
+
+1.  Download MariaDB Java Connector (JDBC driver) dari link berikut
+
+	[mariadb-java-client-1.1.8.jar](https://downloads.mariadb.org/interstitial/client-java-1.1.8/mariadb-java-client-1.1.8.jar?serve)
+
+2.  Check apakah driver sudah memiliki file `META-INF/services/java.sql.Driver` dengan perintah berikut:
+
+	```
+	jar tf ~/Downloads/mariadb-java-client-1.1.8.jar | grep META-INF
+	```
+3. Jika belum ada anda bisa membuat direktori `META-INF/services/` di direktori saat ini anda berada. Kemudian buat file text `java.sql.Driver` dengan isi satu baris berikut
+
+	```
+	org.mariadb.jdbc.Driver
+	```
+	
+	Setelah itu anda bisa meng0-update JAR file tersebut dengan perintah (anda harus di direktori dimana META-INF berada)
+	
+	```
+	jar uf mariadb-java-client-1.1.8.jar META-INF/services/java.sql.Driver
+	```
+	
+	Anda bisa cek lagi untuk memastikan file tersebut sudah ada di JAR file.
+
+4. Deploy file JAR tersebut dari Web Management Console. Login ke Managemen Console, navigasikan ke menu Deployment, lalu klik tombol "Add", klik Browse, pilih file-nya, klik "Enable" kemudian Save.
+
+	Anda akan lihat di EAP console, log seperti ini yang menunjukan file sudah berhasil di-deploy
+	
+	```
+	15:42:21,561 INFO  [org.jboss.as.repository] (HttpManagementService-threads - 11) JBAS014900: Content added at location /home/jboss/EAP-6.4/standalone/data/content/84/f5b706de4dfcb0915eca8e4fd67fcf796ae868/content
+	15:42:21,896 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-3) JBAS015876: Starting deployment of "mariadb-java-client-1.1.8.jar" (runtime-name: "mariadb-java-client-1.1.8.jar")
+	```
+5.  Navigasi ke menu COnfiguration, lalu klik Connector > Datasources, lalu klik tombol "Add", sebuah wizard window akan muncul. Masukan informasi berikut:
+
+		Name: mariadb_DS
+		JNDI Name: java:jboss/datasource/mariadb_DS
+
+	- Klik `mariadb-java-client-1.1.8.jar` pada daftar "Detected Driver"
+	- Masukan Connection URL, Username dan Password, klik Test Connection kemudian Done
+	- Anda akan melihat "mariadb_DS" ada di daftar JDBC Datasources
+	- Pilih mariadb_DS tersebut kemudian klik "Enable" 
+
+6.  Eksplorasi fields yang bisa diatur untuk sebuah datasource.
+   
+    Klik tab Attibutes, Connection, Pool, Validation dan Timeouts.
+    
+    Pada masing-masing tab tersebut, klik link "Need Help?" untuk membaca pejelasan dari masing-masing field yang bisa diatur.
+
+	>> QUIZ: Karena sangat pentingnya fields	tersebut untuk tuning JBoss EAP, coba jawab apa fungsi beberapa fields yang penting berikut:
+	- share-prepared-statements
+	- prepared-statement-cache-size
+	- use-ccm
+	- min-pool-size
+	- max-pool-size
+	- prefill (untuk pool)
+	- set-tx-query-timeout
+	- query-timeout
+	- blocking-timeout-millis
+	- idle-timeout-minutes
+	- allocation-retry
+	- allocation-retry-wait-millis
 	

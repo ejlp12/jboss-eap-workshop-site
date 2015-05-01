@@ -74,13 +74,15 @@ Pada dasarnya anda dapat melakukan uninstall JBoss EAP hanya dengan menghapus di
 Installasi Menggunakan Mode Console
 ===================================
 
-1.  Jalankan perintah berikut untuk memulai instalasi menggunakan mode GUI
+1.  Jalankan perintah berikut untuk memulai instalasi menggunakan mode console:
 
 	```
 	java -jar jboss-eap-6.4.0-installer.jar -console
 	```
 	
-2. Ikuti perintah yang ada diconsole sampai beberapa step supaya anda tau saja cara instalasi ini. Anda tidak perlu menyelesaikan cara instalasi ini, kapanpun sebelum proses instalasi selesai, cancel dengan menekan tombol CTRL+C.
+2. Ikuti perintah yang ada diconsole sampai beberapa step supaya anda tau saja cara instalasi ini. 
+
+> Anda tidak perlu menyelesaikan cara instalasi ini, kapanpun sebelum proses instalasi selesai, cancel dengan menekan tombol CTRL+C, karena kita akan menginstall dengen menggunakan installer dalam bentuk file ZIP.
    
 
 Installasi Menggunakan ZIP File
@@ -232,7 +234,7 @@ Eksplorasi JBoss EAP
 	```
     
 7.  Masuk ke direktori `welcome-content`, di direktori ini terdapat file-file default yang akan ditampilkan jika kita mengakses halaman web (default halaman web adalah http://localhost:8080)
-8.  
+
 
 
    

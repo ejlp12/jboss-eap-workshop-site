@@ -1,4 +1,4 @@
-# LAB2: Cluster Domain
+# LAB: Cluster Domain
 
 Pada LAB ini kita akan membuat 4 server JBoss EAP yang akan diset sebagai sebuah **server group** atau kita sebut **cluster**, dan ke-4 server tersebut dapat dikontrol & dimonitor oleh sebuah admin console terpusat yang berada di **Domain Controllerr**.
 
@@ -247,9 +247,7 @@ Langkah berikut menggunakan asumsi JBoss EAP anda diinstal di direktori `/home/j
         ...
         </profile>
 	</profiles>
-
-	Artinya
-
+	```
 
 	Kemudian cari element `hornetq-server` di profile `ha` dan `full-ha`. Kita perlu menambahkan konfigurasi untuk hornetq engine pada konfigurasi cluster seperti ini:
 	

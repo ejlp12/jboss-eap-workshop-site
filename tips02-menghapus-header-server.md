@@ -22,6 +22,12 @@ Pada `standalone.xml` tambahkan konfigurasi berikut dibawah element `extensions`
 </system-properties>
 ```
 
+atau bisa juga dengan cara menjalankan EAP seperti ini:
+
+```
+./bin/standalone.sh -Dorg.apache.coyote.http11.Http11Protocol.SERVER=ejlp-server
+```
+
 untuk konfigurasi mode domain:
 
     ```
@@ -39,6 +45,8 @@ untuk konfigurasi mode domain:
         </server>
     </servers>
     ```
+
+
 
 ![image](https://cloud.githubusercontent.com/assets/3068071/8335520/60a8ee70-1ac8-11e5-9df8-f0fae6f335ac.png)
 

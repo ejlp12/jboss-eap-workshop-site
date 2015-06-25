@@ -25,6 +25,7 @@ Format yang ditampilkan di access log menggunakan mengikuti pattern yang kita sp
 
 > Untuk lebih detail lihat [lihat dokumentasi](http://docs.jboss.org/jbossweb/7.0.x/config/valve.html)
 
+```
 %a - Remote IP address
 %A - Local IP address
 %b - Bytes sent, excluding HTTP headers, or '-' if zero
@@ -45,15 +46,17 @@ Format yang ditampilkan di access log menggunakan mengikuti pattern yang kita sp
 %D - Time taken to process the request, in millis
 %T - Time taken to process the request, in seconds
 %I - current request thread name (can compare later with stacktraces)
+```
 
 Selain itu informasi dari cookie, incoming header,  Session atau informasi lain dari ServletRequest  juga dapat ditampilkan dengan format seperti berikut:
 
+```
 %{xxx}i for incoming headers
 %{xxx}o for outgoing response headers
 %{xxx}c for a specific cookie
 %{xxx}r xxx is an attribute in the ServletRequest
 %{xxx}s xxx is an attribute in the HttpSession
-
+```
 
 
 Lebih detail bisa dilihat di [How to enable access logging for JBoss EAP 6](https://access.redhat.com/solutions/185383)

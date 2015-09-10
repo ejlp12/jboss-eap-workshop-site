@@ -3,20 +3,21 @@ Replikasi web session dan EJB session (statefull session bean/sfsb) sudah diset 
 Object session secara default disimpan di memory cache menggunakan module [Infinispan](http://infinispan.org/)
 
 Kita bisa lihat di file konfigurasi setting replikasi session seperti ini:
-```
-<subsystem xmlns="urn:jboss:domain:infinispan:1.4">
-             ...
-            <cache-container name="web" aliases="standard-session-cache" default-cache="repl" module="org.jboss.as.clustering.web.infinispan">
-                <transport lock-timeout="60000"/>
-                <replicated-cache name="repl" mode="ASYNC" batching="true">
-                    <file-store/>
-                </replicated-cache>
-                <replicated-cache name="sso" mode="SYNC" batching="true"/>
-                <distributed-cache name="dist" l1-lifespan="0" mode="ASYNC" batching="true">
-                    <file-store/>
-                </distributed-cache>
-            </cache-container>
-            <cache-container name="ejb" aliases="sfsb sfsb-cache" default-cache="repl" module="org.jboss.as.clustering.ejb3.infinispan">
+
+```xml
+  <subsystem xmlns="urn:jboss:domain:infinispan:1.4">
+      ...
+      <cache-container name="web" aliases="standard-session-cache" default-cache="repl" module="org.jboss.as.clustering.web.infinispan">
+          <transport lock-timeout="60000"/>
+          <replicated-cache name="repl" mode="ASYNC" batching="true">
+              <file-store/>
+          </replicated-cache>
+          <replicated-cache name="sso" mode="SYNC" batching="true"/>
+              <distributed-cache name="dist" l1-lifespan="0" mode="ASYNC" batching="true">
+                  <file-store/>
+              </distributed-cache>
+          </cache-container>
+          <cache-container name="ejb" aliases="sfsb sfsb-cache" default-cache="repl" module="org.jboss.as.clustering.ejb3.infinispan">
             ...
             ...
 ```

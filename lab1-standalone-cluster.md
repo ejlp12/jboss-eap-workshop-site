@@ -204,6 +204,19 @@ Keterangan mengenai detail konfigurasi bisa dilihat di [dokumentasi](https://acc
             ...
         </subsystem>
 ```
+> CATATAN: Agar web session direplikasi, aplikasi web yang dideploy perlu ditambahkan tag **`<distributable/>`** di file `web.xml` seperti ini
+>
+    
+    <web-app  xmlns="http://java.sun.com/xml/ns/j2ee"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+                              http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" 
+          version="2.4">
+        <distributable/>
+    </web-app>
+    
+
+
 
 #### Cluster Network
 

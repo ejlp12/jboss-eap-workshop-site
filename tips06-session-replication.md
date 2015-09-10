@@ -32,7 +32,7 @@ Untuk server nodes yang berada di satu segment network (subnet) anda bisa menggu
 ```xml
 <cache-container name="web" default-cache="repl"> 
   <transport stack="tcp"/> 
-  . . . .
+  ...
 </cache-container>
 ```
 
@@ -44,14 +44,14 @@ sedangkan konfigurasi detail penggunaan protocol bisa dilihat dibagian:
     <transport type="UDP" socket-binding="jgroups-udp" diagnostics-socket-binding="jgroups-diagnostics"/>
     <protocol type="PING"/>
     <protocol type="MERGE2"/>
-    . . . . .
+    ...
   </stack>
   <stack name="tcp">
     <transport type="TCP" socket-binding="jgroups-tcp" diagnostics-socket-binding="jgroups-diagnostics"/>
     <protocol type="MPING" socket-binding="jgroups-mping"/>
     <protocol type="TCPPING">
         <property name="initial_hosts">192.168.1.100[7600],192.168.2.200[7600]</property>
-    . . . . .
+    ...
   </stack>
 </subsystem>
 ```

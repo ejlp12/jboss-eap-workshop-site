@@ -129,6 +129,17 @@ Kita dapat menjalankan sebuah lingkungan cluster dengan arsitektur seperti ini d
 
 Sekarang ikuti langkah-langkah berikut untuk menjalankan JBoss EAP dengan arsitektur tersebut dan mengeksplor konfigurasi serta prosesnya.
 
+0. Matikan JBoss EAP jika sebelumnya sudah jalan.
+
+   Tekan CTRL+C di-console dimana anda menjalankan perintah `standalone.sh` atau dengan perintah berikut
+
+   ```
+   cd $JBOSS_HOME/bin
+   ./jboss-cli.sh -c --command=shutdown
+   ```
+
+
+
 1. Jalankan perintah `domain.sh`  tunggu sampai selesai proses booting dengan output terakhir seperti ini: 
 
     ```
@@ -137,10 +148,10 @@ Sekarang ikuti langkah-langkah berikut untuk menjalankan JBoss EAP dengan arsite
     
    Perintah tersebut akan membaca file konfigurasi `domain.xml` dan `host.xml` di folder `domain`
    
-2. Akses admin cosole: [http://127.0.0.1:10190/](http://127.0.0.1:10190/)
+2. Akses admin cosole: [http://127.0.0.1:9990/](http://127.0.0.1:9990/)
 
 3.  Lalu klik menu "Domain" > "Overview" atau akses langsung ke URL: 
-    [http://127.0.0.1:10190/console/App.html#server-groups](http://127.0.0.1:10190/console/App.html#topology)
+    [http://127.0.0.1:9990/console/App.html#server-groups](http://127.0.0.1:10190/console/App.html#topology)
 
 	Kita bisa lihat pada halaman tersebut beberapa server-group dan masing-masing server yang masuk dalam server-group tersebut dan juga kita bisa lihat status dari masing-masing server apakah jalan atau mati.
 
@@ -390,8 +401,21 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
                security-realm="ManagementRealm"/>
     </domain-controller>
     ```
+
+    Karena pada LAB ini Domain Controller berada di mesin yang sama jadi anda dapat tulis` 127.0.0.1`
+
     Variabel `${jboss.domain.master.address}` dapat kita set disitu atau kita spesifikasikan dengan menggunakan command line argument, jika kita tulis seperti ini `${jboss.domain.master.address:192.168.0.1}` artinya jika kita tidak didefinisikan di command line argument parameter `jboss.domain.master.address` maka nilai defaultnya adalah `192.168.0.1`. Kita akan lihat nanti pada saat kita jalankan `domain.sh` kita spesifikasikan pada command line argument nilai ini.
-    
+
+    Ubah port management dari `9999` menjadi `10999` agar tidak bentrok dengan port yang digunakan Domain Controller. Jika Domain Controller ada di mesin (IP address) yang berbeda maka nilai ini tidak perlu diubah:
+
+    ```
+        <management-interfaces>
+            <native-interface security-realm="ManagementRealm">
+                <socket interface="management" port="${jboss.management.native.port:10999}"/>
+            </native-interface>
+        </management-interfaces>
+    ```
+
     Karena kita akan setup 2 JBoss EAP server di Mesin-A dengan nama `server-one` dan `server-two`, maka pastikan kita memdefinisikan kedua server tersebut seperti ini:
     
     ```
@@ -404,7 +428,7 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
         </server>
     </servers>
     ```
-    Kedua server teresebut harus menggunakan `port-offset` yang berbeda agar penggunaan port tidak bentrok. 
+    Kedua server tersebut harus menggunakan `port-offset` yang berbeda agar penggunaan port tidak bentrok. 
 
 4. Jalankan dengan perintah berikut
 

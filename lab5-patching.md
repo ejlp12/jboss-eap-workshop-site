@@ -73,9 +73,14 @@ Proses patch yang dijelaskan disini dapat dilakukan pada JBoss EAP versi 6.2 kea
     "response-headers" : {"process-state" : "restart-required"}
    }
   ```
+
+4. Restart JBoss EAP dengan perintah berikut:
   
-  4. Restart JBoss EAP
-  5. Login ke [Admin Console http://localhost:9990](http://localhost:9990), anda akan lihat di bagian atas halaman awal 
+   ```
+   [standalone@localhost:9999/] reload
+   ```
+   
+5. Login ke [Admin Console http://localhost:9990](http://localhost:9990), anda akan lihat di bagian atas halaman awal 
      muncul tampilan versi yaitu `6.3.3.GA`
   
 
@@ -98,6 +103,13 @@ dari output perintah `patch history` pada CLI.
 
 Anda perlu restart setelah melakukan rollback path.
 
+Memasang Patch lewat Admin Web UI
+---------------------------------
+
+Pemasangan patch dapat dilakukan juga dengan mudah lewat Admin Web UI (http://localhost:9990/console/App.html#patching).
+Caranya sangat mudah sehingga tidak perlu saya jelaskan disini, anda bisa coba langsung akses link tersebut dan akan tampil halaman seperti ini:
+
+![image](https://cloud.githubusercontent.com/assets/3068071/10122785/00b0d7d2-654e-11e5-98cc-3a25b962be5d.png)
   
    
    

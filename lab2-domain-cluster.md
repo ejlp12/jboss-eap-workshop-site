@@ -406,6 +406,7 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
 
     Variabel `${jboss.domain.master.address}` dapat kita set disitu atau kita spesifikasikan dengan menggunakan command line argument, jika kita tulis seperti ini `${jboss.domain.master.address:192.168.0.1}` artinya jika kita tidak didefinisikan di command line argument parameter `jboss.domain.master.address` maka nilai defaultnya adalah `192.168.0.1`. Kita akan lihat nanti pada saat kita jalankan `domain.sh` kita spesifikasikan pada command line argument nilai ini.
 
+
     Ubah port management dari `9999` menjadi `10999` agar tidak bentrok dengan port yang digunakan Domain Controller. Jika Domain Controller ada di mesin (IP address) yang berbeda maka nilai ini tidak perlu diubah:
 
     ```
@@ -416,6 +417,11 @@ Lalu set secret value untuk authentication ke Domain Controller sesuai dengan ni
         </management-interfaces>
     ```
 
+    
+ 	 > Jika authentication ke domain controller ingin menggunakan username yang berbeda dengan nama host yaitu `machinea` maka anda bisa mencantumkan sebagai atribut pada element diatas menjadi seperti ini: 
+ 	 >
+         > `<remote host="..." port"..." username="DOMAIN_CONTROLLER_USER" security-realm="ManagementRealm"/>`
+    
     Karena kita akan setup 2 JBoss EAP server di Mesin-A dengan nama `server-one` dan `server-two`, maka pastikan kita memdefinisikan kedua server tersebut seperti ini:
     
     ```

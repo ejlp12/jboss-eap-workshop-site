@@ -299,21 +299,21 @@ Untuk platform Windows lihat di sub-bab setelah ini.
 
 >> PERHATIAN: Default port dari HTTP server mod_cluster yang didownload adalah 6666. Jika anda menggunakan browser Google Chrome, anda akan mendapatkan error __ERR_UNSAFE_PORT__ karena port tersebut dianggap tidak aman. Agar port tersebut tidak diblok maka anda dapat menambahkan opsi misalnya `–explicitly-allowed-ports=6666,6667` pada shortcut dari aplikasi Chrome.
 
-Saat penulisan artikel ini, versi terakhir JBoss Web Server adalah versi 2.1.0 dan kita akan gunakan versi tersebut dalam LAB ini.
+Saat penulisan artikel ini, versi terakhir JBoss Web Server adalah versi 2.1.0 (mod_cluster 1.3.1) dan kita akan gunakan versi tersebut dalam LAB ini.
 
 Download Apache HTTP Server dari JBoss Web Server versi Enterprise dari website [Red Hat](https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&product=webserver&productChanged=yes) sesuai dengan platform yang and a pakai. Untuk LAB ini silakan download file dari link __Red Hat JBoss Web Server 2.1.0 Apache HTTP Server for RHEL 7 x86_64__
 
 Jika tidal memiliki Red Hat support subscription, anda bisa juga download versi community-nya di link berikut:
 
-http://mod-cluster.jboss.org/downloads/1-2-6-Final-bin
+http://mod-cluster.jboss.org/downloads/1-3-1-Final-bin
 
-Download file yang sudah termasuk Apache HTTP Server (httpd) dan sesuai platform yang dan gunakan misalnya [`mod_cluster-1.2.6.Final-linux2-x64-ssl.tar.gz`](http://downloads.jboss.org/mod_cluster//1.2.6.Final/linux-x86_64/mod_cluster-1.2.6.Final-linux2-x64-ssl.tar.gz) untuk "mod_cluster native budles with httpd and openssl"
+Download file yang sudah termasuk Apache HTTP Server (httpd) dan sesuai platform yang dan gunakan misalnya [`mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz`](http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-x86_64/mod_cluster-1.3.1.Final-linux2-x64-ssl.tar.gz) untuk "mod_cluster native budles with httpd and openssl"
 
 1.  Login sebagai root lalu ekstrak file installer di direktori `/`
 	Program Apache httpd akan diinstall di `/opt/jboss/httpd` lalu jalankan dengan perintah `apachectl start` 
 
     ```
-    tar zxvf mod_cluster-1.2.6.Final-macosx-x64.tar.gz -C /
+    tar zxvf mod_cluster-1.3.1.Final-macosx-x64.tar.gz -C /
     cd /opt/jboss/httpd/bin/
     ./apachectl start
 	```
@@ -324,30 +324,98 @@ Download file yang sudah termasuk Apache HTTP Server (httpd) dan sesuai platform
     
     [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
 
+### Troubleshooting mod_cluster
+
+1. Cek konfigurasi mod_cluster di file `/opt/jboss/httpd/httpd/conf/httpd.conf`
+
+   ```
+   # MOD_CLUSTER_ADDS
+   # Adjust to you hostname and subnet.
+   <IfModule manager_module>
+     Listen 127.0.0.1:6666
+     ManagerBalancerName mycluster
+     <VirtualHost 127.0.0.1:6666>
+       <Location />
+         Require ip 127.0.0
+       </Location>
+
+       KeepAliveTimeout 300
+       MaxKeepAliveRequests 0
+       #ServerAdvertise on http://@IP@:6666
+       AdvertiseFrequency 5
+       #AdvertiseSecurityKey secret
+       #AdvertiseGroup @ADVIP@:23364
+       AdvertiseGroup 224.0.1.105:23364
+       EnableMCPMReceive
+       AllowDisplay On
+
+       <Location /mod_cluster_manager>
+        SetHandler mod_cluster-manager
+         Require ip 127.0.0
+       </Location>
+
+     </VirtualHost>
+  </IfModule>
+    ```
+
+   * Pastikan IP address dan port di baris `AdvertiseGroup 224.0.1.105:23364` sesuai dengan IP dan port mod_cluster yang diset di JBoss EAP:
+
+     ```
+     <socket-binding name="modcluster" port="0" multicast-address="224.0.1.105" multicast-port="23364"/>
+     ```
+
+   * Tambahkan `AllowDisplay On` agar bisa kita cek apakah modul yang perlu digunakan untuk cluster sudah berhasil di-load.
+     Anda dapat lihat di [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager) seperti ini:
+
+     ![image](https://cloud.githubusercontent.com/assets/3068071/11315832/a00e2368-902b-11e5-811e-7a438e8d526f.png)
+
+   * Pastikan ada baris `EnableMCPMReceive`
+
+2. Cek Advertise protocol yang menggunakan UDP apakah sudah jalan dengan perintah `tcpdump -n host 224.0.1.105`, seperti berikut.
+
+   Kita akan lihat paket UDP dikirim ke IP multicast 224.0.1.105 port 23364 (default port)
+   
+
+   ```
+   $ sudo tcpdump -n host 224.0.1.105
+   tcpdump: data link type PKTAP
+   tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+   listening on pktap, link-type PKTAP (Packet Tap), capture size 65535 bytes
+   07:03:16.564750 IP 192.168.1.4.23364 > 224.0.1.105.23364: UDP, length 302
+   07:03:20.512593 IP 192.168.1.4 > 224.0.1.105: igmp v2 report 224.0.1.105
+   07:03:21.708928 IP 192.168.1.4.23364 > 224.0.1.105.23364: UDP, length 302
+   07:03:26.850105 IP 192.168.1.4.23364 > 224.0.1.105.23364: UDP, length 302
+   07:03:31.997529 IP 192.168.1.4.23364 > 224.0.1.105.23364: UDP, length 302
+   ^C
+   5 packets captured
+   45 packets received by filter
+   0 packets dropped by kernel
+   ```
+   
+
 Mod_cluster di Windows
 ----------------------
 
 Download mod_cluster untuk windows x86
 
-[mod_cluster-1.2.6.Final-windows-x86.zip](http://downloads.jboss.org/mod_cluster//1.2.6.Final/windows/mod_cluster-1.2.6.Final-windows-x86.zip)
+[mod_cluster-1.3.1.Final-windows-x86.zip](http://downloads.jboss.org/mod_cluster//1.3.1.Final/windows/mod_cluster-1.3.1.Final-windows-x86.zip)
 
-1. Ekstrak file `mod_cluster-1.2.6.Final-windows-x86-ssl.zip` di direktori --misalnya-- `D:\httpd-2.2`
+1. Ekstrak file `mod_cluster-1.3.1.Final-windows-x86.zip` di direktori --misalnya-- `D:\httpd-2.2`
 2. Buka command prompt dengan user Administrator (run as Administrator)
 3. Masuk ke direktori tersebut dan jalankan `installconf.bat`
 
 	```
 	D:\
 	cd httpd-2.2\bin
-    installconf.bat
+  installconf.bat
 	```
 4. Jalankan Web Server dengan perintah `httpd.exe`
 5. Modul mod_cluster secara default sudah terinstal dan terkonfigurasi sebagai modul Apache HTTP server. 
-    Kita sekarang bisa cek JBoss EAP cluster yang sudah terdeteksi oleh  Apache HTTP server dengan mengakses 
-    ke URL berikut:
+  Kita sekarang bisa cek JBoss EAP cluster yang sudah terdeteksi oleh  Apache HTTP server dengan mengakses ke URL berikut:
     
     [http://localhost:6666/mod_cluster_manager](http://localhost:6666/mod_cluster_manager)
 
-![Tampilan mod_cluster_manager](https://cloud.githubusercontent.com/assets/3068071/7254245/ff17c642-e86b-11e4-8206-2be8ddcdb2c8.png)
+    ![Tampilan mod_cluster_manager](https://cloud.githubusercontent.com/assets/3068071/7254245/ff17c642-e86b-11e4-8206-2be8ddcdb2c8.png)
 
 Test HA cluster
 ---------------

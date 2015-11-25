@@ -1,7 +1,11 @@
-Biasanya kita mendapatkan access log yang menunjukan HTTP request/response di Web/Proxy Server. Tapi seringkali kita menjalankan 
-JBoss EAP server untuk langsung diakses end-users, jadi tidak ada Web Server atau Proxy Server yang menjadi jembatan sebelum 
-request diterima EAP. EAP secara default tidak mengeluarkan access log, tapi kita bisa membuat agar EAP dapat mengeluarkan access
-log yang serupa dengan Apache HTTPD server. Caranya adalah sebagai berikut:
+Jika kita menggunakan Web Server atau Proxy Server, secara default biasanya Web Server akan memberikan log dari setiap request/response HTTP di sebuah file yang kita kenal dengan nama access log.
+
+EAP secara default tidak mengeluarkan access log, jadi jika JBoss EAP server langsung diakses end-users (tidak ada Web Server atau Proxy Server) yang menjadi jembatan sebelum request diterima JBoss EAP maka kita tidak dapat melihat access log. 
+
+Tetapi kita bisa membuat agar EAP dapat mengeluarkan access log yang serupa dengan Apache HTTP server. Jadi setiap request HTTP ke JBoss EAP juga dapat di-log ke suatu file, yaitu dengan cara menambahkan konfigurasi `access-log` elemen di dalam elemen `virtual-server` seperti berikut: 
+
+ Tapi seringkali kita menjalankan 
+  Caranya adalah sebagai berikut:
 
 Tambahkan konfigurasi ini di `standalone.xml`
 
@@ -30,5 +34,42 @@ dengan contoh format lognya adalah seperti ini:
 127.0.0.1 - - [27/Apr/2015:15:15:01 +0700] GET /queryrunner/index.jsp HTTP/1.1 200 586 - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36 vfab6BqFD4608V+vzSL80Fmw 0.066
 ```
 
-Apa yang akan di-log pada file tersebut dapat kita spesifikasikan pada attribute `pattern`. Informasi lebih detail untuk
-membuat pattern tersebut bisa dibaca di [http://docs.jboss.org/jbossweb/7.0.x/config/valve.html](http://docs.jboss.org/jbossweb/7.0.x/config/valve.html)
+Format yang ditampilkan di access log menggunakan mengikuti __pattern__ yang kita spesifikasikan di konfigurasi diatas, variable yang dapat ditampilkan adalah sebagai berikut:
+
+> Untuk lebih detail untuk membuat pattern bisa dibaca di [dokumentasi](http://docs.jboss.org/jbossweb/7.0.x/config/valve.html)
+
+```
+%a - Remote IP address
+%A - Local IP address
+%b - Bytes sent, excluding HTTP headers, or '-' if zero
+%B - Bytes sent, excluding HTTP headers
+%h - Remote host name (or IP address if resolveHosts is false)
+%H - Request protocol
+%l - Remote logical username from identd (always returns '-')
+%m - Request method (GET, POST, etc.)
+%p - Local port on which this request was received
+%q - Query string (prepended with a '?' if it exists)
+%r - First line of the request (method and request URI)
+%s - HTTP status code of the response
+%S - User session ID
+%t - Date and time, in Common Log Format
+%u - Remote user that was authenticated (if any), else '-'
+%U - Requested URL path
+%v - Local server name
+%D - Time taken to process the request, in millis
+%T - Time taken to process the request, in seconds
+%I - current request thread name (can compare later with stacktraces)
+```
+
+Selain itu informasi dari cookie, incoming header,  Session atau informasi lain dari ServletRequest  juga dapat ditampilkan dengan format seperti berikut:
+
+```
+%{xxx}i for incoming headers
+%{xxx}o for outgoing response headers
+%{xxx}c for a specific cookie
+%{xxx}r xxx is an attribute in the ServletRequest
+%{xxx}s xxx is an attribute in the HttpSession
+```
+
+Lebih detail bisa dilihat di [How to enable access logging for JBoss EAP 6](https://access.redhat.com/solutions/185383)
+

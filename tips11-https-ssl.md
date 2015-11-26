@@ -64,17 +64,17 @@ Re-enter new password: P@ssw0rd
    ```
 3. Selesai, restart JBoss EAP dan test 
 
-Mode standalone: 
-```
-./bin/jboss-cli.sh -c --command=reload
-```
-
-Mode domain, di host domain controller:
-```
-./bin/jboss-cli.sh -c --controller=localhost:9990 --command=reload
-``` 
-
-Test dengan akses ke https://hostname:8443/ 
+   Mode standalone: 
+   ```
+   ./bin/jboss-cli.sh -c --command=reload
+   ```
+    
+  Mode domain, di host domain controller:
+  ```
+  ./bin/jboss-cli.sh -c --controller=localhost:9990 --command=reload
+  ``` 
+    
+  Test dengan akses ke https://hostname:8443/ 
 
 ## Native SSL-Setup menggunakan OpenSSL
 

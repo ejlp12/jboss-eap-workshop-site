@@ -131,3 +131,125 @@ Re-enter new password: P@ssw0rd
    ```
    
 Selanjutnya lakukan langkah yang sama seperti anda men-setup key-store versi Java diatas.
+
+
+## HTTP Server + mod_cluster *DRAFT*
+
+```
+$ openssl rsa -passin pass:x -in server.pass.key -out server.key
+writing RSA key
+
+$ rm server.pass.key
+
+$ openssl req -new -key server.key -out server.csr
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:ID
+State or Province Name (full name) [Some-State]:Jakarta
+Locality Name (eg, city) []:Jakarta
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:EJLP12 corp
+Organizational Unit Name (eg, section) []:JBoss
+Common Name (e.g. server FQDN or YOUR name) []:host1.ejlp12.com
+Email Address []:ejlp12@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:P@ssw0rd
+An optional company name []:EJLP12
+
+$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+Signature ok
+subject=/C=ID/ST=Jakarta/L=Jakarta/O=EJLP12 corp/OU=JBoss/CN=host1.ejlp12.com/emailAddress=ejlp12@gmail.com
+Getting Private key
+
+$  ls -la
+total 3
+-rw-r--r--   1 ejlp12  wheel   1.3K Nov 27 05:02 server.crt
+-rw-r--r--   1 ejlp12  wheel   1.1K Nov 27 05:02 server.csr
+-rw-r--r--   1 ejlp12  wheel   1.6K Nov 27 05:00 server.key
+```
+
+Uncomment beberapa baris berikut di `httpd.conf`
+
+```
+LoadModule ssl_module /opt/jboss/httpd/lib/httpd/modules/mod_ssl.so
+LoadModule socache_shmcb_module /opt/jboss/httpd/lib/httpd/modules/mod_socache_shmcb.so
+ServerName host1.ejlp12.com:80
+```
+
+
+
+```
+<IfModule manager_module>
+  Listen 127.0.0.1:6666
+  ManagerBalancerName mycluster
+  <VirtualHost 127.0.0.1:6666>
+    <Location />
+     Require ip 127.0.0
+    </Location>
+
+    KeepAliveTimeout 300
+    MaxKeepAliveRequests 0
+    #ServerAdvertise on http://@IP@:6666
+    AdvertiseFrequency 5
+    #AdvertiseSecurityKey secret
+    #AdvertiseGroup @ADVIP@:23364
+    AdvertiseGroup 224.0.1.105:23364
+    EnableMCPMReceive
+    AllowDisplay On
+
+   SSLEngine on
+   SSLCipherSuite AES128-SHA:ALL:!ADH:!LOW:!MD5:!SSLV2:!NULL
+   SSLVerifyDepth 10
+   SSLProxyEngine On
+   SSLCertificateKeyFile /Servers/EAP-6.4/server.key
+   SSLCertificateFile /Servers/EAP-6.4/server.crt
+   SSLCACertificateFile /Servers/EAP-6.4/server.csr
+   LogLevel debug
+
+    <Location /mod_cluster_manager>
+       SetHandler mod_cluster-manager
+       Require ip 127.0.0
+    </Location>
+
+  </VirtualHost>
+</IfModule>
+```
+
+
+```
+ln -s /Servers/EAP-6.4/server.crt /opt/jboss/httpd/httpd/conf/server.crt
+ln -s /Servers/EAP-6.4/server.key /opt/jboss/httpd/httpd/conf/server.key
+```
+
+Restart Apache HTTP Server
+```
+sudo /Servers/MOD_CLUSTER/jboss/httpd/sbin/apachectl restart
+```
+
+Check error log:
+```
+$ tail -f /Servers/MOD_CLUSTER/jboss/httpd/httpd/logs/error_log
+```
+
+Check http://localhost:6666/mod_cluster_manager
+
+### JBoss EAP
+
+```
+           <subsystem xmlns="urn:jboss:domain:modcluster:1.2">
+                <mod-cluster-config advertise-socket="modcluster" connector="ajp">
+                    <dynamic-load-provider>
+                        <load-metric type="busyness"/>
+                    </dynamic-load-provider>
+                    <ssl password="password" protocol="TLSv1" key-alias="foo" certificate-key-file="foo.keystore" />
+                </mod-cluster-config>
+            </subsystem>
+```
+
+Restart semua servers

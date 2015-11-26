@@ -135,7 +135,11 @@ Selanjutnya lakukan langkah yang sama seperti anda men-setup key-store versi Jav
 
 ## HTTP Server + mod_cluster *DRAFT*
 
+Buat certificate files di direktori `/Servers/EAP-6.4/`
+
 ```
+$ cd /Servers/EAP-6.4/
+
 $ openssl rsa -passin pass:x -in server.pass.key -out server.key
 writing RSA key
 
@@ -182,7 +186,12 @@ LoadModule socache_shmcb_module /opt/jboss/httpd/lib/httpd/modules/mod_socache_s
 ServerName host1.ejlp12.com:80
 ```
 
+Buka komentar (uncomment) baris berikut sehingga HTTP Server akan dapat diases melalui https (port 433):
+```
+Include conf/extra/httpd-ssl.conf
+```
 
+Ubah juga bagian konfigurasi mod_cluster di `httpd.conf` agar komunikasi port 6666 menggunakan SSL:
 
 ```
 <IfModule manager_module>
@@ -221,6 +230,7 @@ ServerName host1.ejlp12.com:80
 </IfModule>
 ```
 
+File `conf/extra/httpd-ssl.conf` akan membutuhkan certificate yang berada di direktori `/opt/jboss/httpd/httpd/conf/`, karena kita simpan file certificate-nya di `/Servers/EAP-6.4/` maka saya buat symlink berikut:
 
 ```
 ln -s /Servers/EAP-6.4/server.crt /opt/jboss/httpd/httpd/conf/server.crt
@@ -232,12 +242,13 @@ Restart Apache HTTP Server
 sudo /Servers/MOD_CLUSTER/jboss/httpd/sbin/apachectl restart
 ```
 
+Test koneksi https dengan mengakses menggunakan browser ke https://HTTP_SERVER_HOST
+
 Check error log:
 ```
 $ tail -f /Servers/MOD_CLUSTER/jboss/httpd/httpd/logs/error_log
 ```
 
-Check http://localhost:6666/mod_cluster_manager
 
 ### JBoss EAP
 
@@ -253,3 +264,8 @@ Check http://localhost:6666/mod_cluster_manager
 ```
 
 Restart semua servers
+
+
+### Check mod_cluster
+
+Check [https://localhost:6666/mod_cluster_manager](https://localhost:6666/mod_cluster_manager), gunakan **https** BUKAN http.

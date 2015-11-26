@@ -6,7 +6,7 @@ Untuk menyiapkan JBoss EAP server agar dapat diakses dengan SSL/HTTPS, ada dua c
 Pada dasarnya keduanya sama saja hanya saja format penyimpanan certificate yang berbeda. Untuk kedua opsi tersebut anda harus membuat (self-signed) certificate.
 
 
-## Menyipkan SSL certificate versi Java mengunakan keytool
+## Menyiapkan SSL certificate versi Java mengunakan keytool
 
 Anda perlu men-generate sebuah  secret key/certificate untuk kemudian akan disimpan di sebuah file yang disebut "key store". 
 

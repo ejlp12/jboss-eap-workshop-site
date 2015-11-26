@@ -130,4 +130,4 @@ Re-enter new password: P@ssw0rd
      ...
    ```
    
-Lakukan hal yang sama seperti anda men-setup 
+Selanjutnya lakukan langkah yang sama seperti anda men-setup key-store versi Java diatas.

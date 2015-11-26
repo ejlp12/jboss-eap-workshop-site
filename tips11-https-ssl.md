@@ -252,9 +252,14 @@ $ tail -f /Servers/MOD_CLUSTER/jboss/httpd/httpd/logs/error_log
 
 ### JBoss EAP
 
+Ubah  `domain.xml` dengan menambahkan konfigurasi ssl seperti berikut:
+
 ```
            <subsystem xmlns="urn:jboss:domain:modcluster:1.2">
+               <!-- // Tutup bagian ini, ganti konektor dari ajp ke https
                 <mod-cluster-config advertise-socket="modcluster" connector="ajp">
+                -->
+                <mod-cluster-config advertise-socket="modcluster" connector="https">
                     <dynamic-load-provider>
                         <load-metric type="busyness"/>
                     </dynamic-load-provider>
@@ -264,6 +269,8 @@ $ tail -f /Servers/MOD_CLUSTER/jboss/httpd/httpd/logs/error_log
 ```
 
 Restart semua servers
+
+Referensi: [https://access.redhat.com/solutions/199493](https://access.redhat.com/solutions/199493)
 
 
 ### Check mod_cluster

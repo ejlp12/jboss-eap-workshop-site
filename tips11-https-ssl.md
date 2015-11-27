@@ -76,7 +76,7 @@ Re-enter new password: P@ssw0rd
     
   Test dengan akses ke https://hostname:8443/ 
 
-## Native SSL-Setup menggunakan OpenSSL
+## Native SSL-Setup menggunakan OpenSSL (Alternatif)
 
 1.  Generate key
    ```
@@ -266,6 +266,18 @@ Ubah  `domain.xml` dengan menambahkan konfigurasi ssl seperti berikut:
                     <ssl password="password" protocol="TLSv1" key-alias="foo" certificate-key-file="foo.keystore" />
                 </mod-cluster-config>
             </subsystem>
+```
+
+> NOTE: APa harus ditambahkan `proxy-list`??? menjadi seperti ini:
+>
+> `<mod-cluster-config advertise-socket="modcluster" connector="https" proxy-list="IP_PROXY_HTTPS_SERVER1:443,IP_PROXY_HTTPS_SERVER2:443">`
+
+Tambahakan `proxy-name="IP_PROXY_HTTPS_SERVER" proxy-port="443"`
+
+```
+   <subsystem xmlns="urn:jboss:domain:web:2.2" ...>
+      ...
+      <connector name="https" scheme="https" protocol="HTTP/1.1" socket-binding="https" enable-lookups="false" secure="true" proxy-name="IP_PROXY_HTTPS_SERVER" proxy-port="443">
 ```
 
 Restart semua servers

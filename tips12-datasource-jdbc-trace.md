@@ -48,6 +48,12 @@ tail -f <EAP_INSTALL_DIR>/standalone/logs/server.log | grep jboss.jdbc.spy
 10:54:44,468 DEBUG [jboss.jdbc.spy] (http-/127.0.0.1:8180-1) java:jboss/datasources/ExampleDS [Connection] close()
 ```
 
+Log output dari konfigurasi diatas hanya bisa dilihat di file (server.log), jika anda menginginkan untuk melihatnya di console maka jalankan perintah ini untuk mengubah level logging CONSOLE menjadi TRACE:
+
+```
+/subsystem=logging/console-handler=CONSOLE:write-attribute(name=level, value=TRACE)
+```
+
 ## Memonitor open & close connection di pool
 
 Tambahan: jika anda ingin melihat aktivitas connection pool yaitu saat koneksi dibuka dan ditutup oleh setiap object connection, anda bisa nemambahkan atribut `cached-connection-manager`
@@ -55,3 +61,6 @@ Tambahan: jika anda ingin melihat aktivitas connection pool yaitu saat koneksi d
 ```
 /subsystem=jca/cached-connection-manager=cached-connection-manager/:write-attribute(name=error,value=true)
 ``
+
+
+Referensi: [Enabling DataSource Spy Logging in JBoss EAP 6](https://access.redhat.com/solutions/89393)

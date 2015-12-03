@@ -79,6 +79,7 @@ Re-enter new password: P@ssw0rd
 ## Native SSL-Setup menggunakan OpenSSL (Alternatif)
 
 1.  Generate key
+
    ```
    $ cd /Server/EAP-6.4
    $ openssl genrsa -des3 -out foo.pem 1024
@@ -133,7 +134,9 @@ Re-enter new password: P@ssw0rd
 Selanjutnya lakukan langkah yang sama seperti anda men-setup key-store versi Java diatas.
 
 
-## HTTP Server + mod_cluster *DRAFT*
+## Konfigurasi JBoss EWS HTTP Server + mod_cluster menggunakan HTTPS/SSL **DRAFT**
+
+> Catatan dibawah ini belum sepnuhnya jalan! MASIH PERLU DIREVISI.
 
 Buat certificate files di direktori `/Servers/EAP-6.4/`
 
@@ -250,7 +253,7 @@ $ tail -f /Servers/MOD_CLUSTER/jboss/httpd/httpd/logs/error_log
 ```
 
 
-### JBoss EAP
+### Konfigurasi mod_cluster pada Domain Mode menggunakan HTTPS/SSL
 
 Ubah  `domain.xml` dengan menambahkan konfigurasi ssl seperti berikut:
 
@@ -268,7 +271,7 @@ Ubah  `domain.xml` dengan menambahkan konfigurasi ssl seperti berikut:
             </subsystem>
 ```
 
-> NOTE: APa harus ditambahkan `proxy-list`??? menjadi seperti ini:
+> NOTE: Apa harus ditambahkan `proxy-list`??? menjadi seperti ini:
 >
 > `<mod-cluster-config advertise-socket="modcluster" connector="https" proxy-list="IP_PROXY_HTTPS_SERVER1:443,IP_PROXY_HTTPS_SERVER2:443">`
 

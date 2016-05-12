@@ -7,6 +7,7 @@ Untuk membuat password terenkripsi lakukan langkah berikut:
 
 1.  Enkripsi password dengan menggunakan perintah berikut:
 
+    > Berikut ini adalah perintah di Linux (Bash shell):
     ```
     export JBOSS_HOME=/home/jboss/jboss-eap-6.1
     export CLASSPATH=$JBOSS_HOME/modules/system/layers/base/org/picketbox/main/picketbox-4.0.17.SP2-redhat-2.jar:$JBOSS_HOME//modules/system/layers/base/org/jboss/logging/main/jboss-logging-3.1.2.GA-redhat-1.jar:$CLASSPATH
@@ -20,8 +21,7 @@ Untuk membuat password terenkripsi lakukan langkah berikut:
     
     Copy & paste output dari password yang sudah terenkripsi, dalam hal ini "9fdd42c2a7390d3" untuk kemudian di letakan di konfigurasi `standalone.xml` seperti dibawah ini.
 
-2.  Tambahkan konfigurasi berikut didalam elemen `security-domains`:
-
+2.  Tambahkan konfigurasi berikut didalam elemen `security-domains` di `standalone.xml`:
 
     ```
     <security-domain name="encrypted-ds" cache-type="default">  
@@ -38,19 +38,29 @@ Untuk membuat password terenkripsi lakukan langkah berikut:
     Perhatikan `NamaDataSource_ConnectionPool` harus sesuai dengan nama datasource pool-name yang akan menggunakan login-modul tersebut
 
 
-3.  Didalam element `datasource` 
+3.  Didalam element `datasource`, hapus bagian ini
 
     ```
-    <security> 
-      <security-domain>encrypted-ds</security-domain>
-    </security>
+     <datasource jndi-name="java:/blahblah" pool-name="NamaDataSource_ConnectionPool" ... >
+        ...
+         <!-- Hapus atau beri tanda komentar seperti ini
+         <security> 
+            <user-name>sa</user-name> 
+            <password>sa</password> 
+         </security>
+         -->
+    ```
+    
+    Ganti menjadi seperti ini:
+    
+    ```
+    <datasource jndi-name="java:/blahblah" pool-name="NamaDataSource_ConnectionPool" ... >
+    ...
+        <security> 
+            <security-domain>encrypted-ds</security-domain>
+        </security>
+    </datasource>
+    
+    Perhatikan value dalam element `security-domain` tersebut adalah `encrypted-ds` yaitu value dari attribute name dari element `security-domain` diatas.
     ```
 
-    Menggantikan konfigurasi seperti ini:
-
-    ```
-    <security> 
-      <user-name>sa</user-name> 
-      <password>sa</password> 
-    </security>
-    ```

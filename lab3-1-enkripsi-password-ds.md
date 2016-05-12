@@ -44,24 +44,28 @@ Untuk membuat password terenkripsi lakukan langkah berikut:
     ```
      <datasource jndi-name="java:/blahblah" pool-name="NamaDataSource_ConnectionPool" ... >
         ...
+        
          <!-- Hapus atau beri tanda komentar seperti ini
          <security> 
             <user-name>sa</user-name> 
             <password>sa</password> 
          </security>
          -->
+     </datasource>
     ```
     
     Ganti menjadi seperti ini:
     
     ```
-    <datasource jndi-name="java:/blahblah" pool-name="NamaDataSource_ConnectionPool" ... >
-    ...
+     <datasource jndi-name="java:/blahblah" pool-name="NamaDataSource_ConnectionPool" ... >
+        ...
+        
         <security> 
             <security-domain>encrypted-ds</security-domain>
         </security>
-    </datasource>
-    
+     </datasource>
+     ```
+     
     Perhatikan value dalam element `security-domain` tersebut adalah `encrypted-ds` yaitu value dari attribute name dari element `security-domain` diatas.
-    ```
+   
 

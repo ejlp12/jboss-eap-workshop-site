@@ -8,6 +8,7 @@ Untuk membuat password terenkripsi lakukan langkah berikut:
 1.  Enkripsi password dengan menggunakan perintah berikut:
 
     > Berikut ini adalah perintah di Linux (Bash shell):
+    
     ```
     export JBOSS_HOME=/home/jboss/jboss-eap-6.1
     export CLASSPATH=$JBOSS_HOME/modules/system/layers/base/org/picketbox/main/picketbox-4.0.17.SP2-redhat-2.jar:$JBOSS_HOME//modules/system/layers/base/org/jboss/logging/main/jboss-logging-3.1.2.GA-redhat-1.jar:$CLASSPATH

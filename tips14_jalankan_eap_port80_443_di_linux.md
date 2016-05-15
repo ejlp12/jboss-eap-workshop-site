@@ -2,7 +2,7 @@ Biasanya kita menginginkan aplikasi web di JBoss EAP untuk bisa diakses dari por
 
 JBoss EAP default-nya menjalanakan protokol HTTP dan HTTPS untuk aplikasi web berturut-turut di port 8080 dan 8443.
 
-JBoss EAP di production environment sebagiknya (best practice) dijalankan oleh user non-root karena alasan keamanan, dan karena alasan keamanan juga user non-root di Linux tidak bisa menjalankan aplikasi yang membuka port dibawah 1024.
+JBoss EAP di production environment sebaiknya (best practice) dijalankan oleh user non-root karena alasan keamanan, dan karena alasan keamanan juga user non-root di Linux tidak bisa menjalankan aplikasi yang membuka port dibawah 1024.
 
 Jadi solusinya adalah:
 

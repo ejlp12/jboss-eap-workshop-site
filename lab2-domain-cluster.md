@@ -237,10 +237,12 @@ Kita akan mensimulasikan sebuah Domain Controller yang dijalankan di Mesin-X. Pa
 Langkah berikut menggunakan asumsi JBoss EAP anda diinstal di direktori `/home/jbos-eap/`
 
 1.  Copy direktori `domain` menjadi `domain-controller` pada direktori yang sama yaitu di `/home/jboss-eap`
+
     ```
     cd /home/jboss-eap
-    cp domain domain-controller
+    cp -R domain domain-controller
     ```
+
 2.  Buka file `domain.xml` di direktori `domain-controller/configuration/` dengan file editor. Di file ini kita akan melihat ada beberapa konfigurasi subsystem untuk masing-masing **profile** 
 
 	```

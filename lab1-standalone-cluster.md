@@ -100,7 +100,7 @@ Jika anda menggunakan dua mesin yang berbeda, lakukan instalasi di kedua mesin. 
     Berikut penjelasan mengenai opsi yang digunakan pada perintah diatas
  
 
-	* `-b` : Binding address. 0.0.0.0 artinya port akan di-binding kesemua network interface/IP address yang dimilimi meson terse but.
+	* `-b` : Binding address. 0.0.0.0 artinya port akan di-binding kesemua network interface/IP address yang dimiliki mesin tersebut.
 	* `-u` : Multicast address. Multicast address digunakan oleh mod_cluster dari JBoss EAP untuk memberikan informasi kepada load balancer.
 	* `-Djboss.node.name` : Nama node. Nama ini dapat juga diset pada file `standalone.xml ` misalnya `<server name="server1" xmlns="urn:jboss:domain:1.5">`
 	* `-Djboss.socket.binding.port-offset` : Default port yang akan digunakan nilainya akan ditambahkan dengan nilai offset ini. Misalnya default port 8080 akan menjadi
@@ -166,7 +166,7 @@ Untuk konfifurasi HA, dibutuhkan extensions tambahan berikut ini:
     </extensions>
     ```
     
-[Infinispan]() adalah software untuk in-memory data grid yang digunakan JBoss EAP untuk menyimpan data HTTP/EJB session, cache
+[Infinispan](http://infinispan.org/) adalah software untuk in-memory data grid yang digunakan JBoss EAP untuk menyimpan data HTTP/EJB session, cache
 
 [JGroups](http://www.jgroups.org/) adalah software yang digunakan untuk komunikasi antar server/node dalam satu cluster
 

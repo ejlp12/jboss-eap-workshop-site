@@ -27,13 +27,13 @@ Men-deploy aplikasi menggunakan Admin Console
 7.  Klik `jboss-numberguess.war` di list Deployment, lalu klik tombol "En/Disable" untuk membuat aplikasi tersebut dijakankan (enable), klik tombol Confirm pada dialog windows   
 
 	```
-06:22:49,351 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-8) JBAS015876: Starting deployment of "jboss-numberguess.war" (runtime-name: "jboss-numberguess.war")
-06:22:49,392 INFO  [org.jboss.weld.deployer] (MSC service thread 1-7) JBAS016002: Processing weld deployment jboss-numberguess.war
-06:22:49,404 INFO  [org.jboss.weld.deployer] (MSC service thread 1-7) JBAS016005: Starting Services for CDI deployment: jboss-numberguess.war
-06:22:49,405 INFO  [org.jboss.weld.deployer] (MSC service thread 1-3) JBAS016008: Starting weld service for deployment jboss-numberguess.war
-06:22:49,423 INFO  [org.jboss.web] (ServerService Thread Pool -- 108) JBAS018210: Register web context: /jboss-numberguess
-06:22:49,437 INFO  [javax.enterprise.resource.webcontainer.jsf.config] (ServerService Thread Pool -- 108) Initializing Mojarra 2.1.28-jbossorg-6  for context '/jboss-numberguess'
-06:22:49,507 INFO  [org.jboss.as.server] (HttpManagementService-threads - 17) JBAS015859: Deployed "jboss-numberguess.war" (runtime-name : "jboss-numberguess.war")
+	06:22:49,351 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-8) JBAS015876: Starting deployment of "jboss-numberguess.war" (runtime-name: "jboss-numberguess.war")
+	06:22:49,392 INFO  [org.jboss.weld.deployer] (MSC service thread 1-7) JBAS016002: Processing weld deployment jboss-numberguess.war
+	06:22:49,404 INFO  [org.jboss.weld.deployer] (MSC service thread 1-7) JBAS016005: Starting Services for CDI deployment: jboss-numberguess.war
+	06:22:49,405 INFO  [org.jboss.weld.deployer] (MSC service thread 1-3) JBAS016008: Starting weld service for deployment jboss-numberguess.war
+	06:22:49,423 INFO  [org.jboss.web] (ServerService Thread Pool -- 108) JBAS018210: Register web context: /jboss-numberguess
+	06:22:49,437 INFO  [javax.enterprise.resource.webcontainer.jsf.config] (ServerService Thread Pool -- 108) Initializing Mojarra 2.1.28-jbossorg-6  for context '/jboss-numberguess'
+	06:22:49,507 INFO  [org.jboss.as.server] (HttpManagementService-threads - 17) JBAS015859: Deployed "jboss-numberguess.war" (runtime-name : "jboss-numberguess.war")
 	```
 	
 8. Akses aplikasi helloworld dari browser [http://localhost:8080/jboss-numberguess](http://localhost:8080/jboss-numberguess)

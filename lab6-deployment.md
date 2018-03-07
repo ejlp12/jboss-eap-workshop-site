@@ -36,7 +36,7 @@ Men-deploy aplikasi menggunakan Admin Console
 	06:22:49,507 INFO  [org.jboss.as.server] (HttpManagementService-threads - 17) JBAS015859: Deployed "jboss-numberguess.war" (runtime-name : "jboss-numberguess.war")
 	```
 	
-8. Akses aplikasi helloworld dari browser [http://localhost:8080/jboss-numberguess](http://localhost:8080/jboss-numberguess)
+8. Akses aplikasi tersebut dari browser [http://localhost:8080/jboss-numberguess](http://localhost:8080/jboss-numberguess)
 
 9. Delete aplikasi dengan mengklik `jboss-numberguess.war` di list Deployment, lalu klik tombol "Remove", lalu klik Confirm
 
@@ -88,6 +88,7 @@ Men-deploy aplikasi secara manual
 	6:57:14,505 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-4) JBAS015877: Stopped deployment jboss-shopping-cart-server.jar (runtime-name: jboss-shopping-cart-server.jar) in 10ms
 	06:57:14,535 INFO  [org.jboss.as.server] (DeploymentScanner-threads - 1) JBAS015858: Undeployed "jboss-shopping-cart-server.jar" (runtime-name: "jboss-shopping-cart-server.jar")
 	```
+	
 Mengatur lokasi Root Web
 ========================
 
@@ -103,4 +104,4 @@ Pada latihan ini, anda akan 'mematikan' halaman default (Welcome file) dari JBos
 
 	Set `enable-welcome-root` menjadi __false__ dan set `default-web-module` dengan aplikasi yang sudah di-deploy.
 
->> Pada versi sebelumnya setting ini tidak bisa dilakukan dari Management Console, tapi di veri 6.4 anda juga dapat melakukan perubahan dari Mgmt Console. Anda bisa mengakses menu "Configuration" > "Web" > "Servlet/HTTP" > __Virtual Servers__, pilih default-host, klik Edit, kemudian ubah "Default Module"
+>> Pada versi sebelumnya setting ini tidak bisa dilakukan dari Management Console, tapi di veri 6.4 anda juga dapat melakukan perubahan dari Management Console. Anda bisa mengakses menu "Configuration" > "Web" > "Servlet/HTTP" > __Virtual Servers__, pilih default-host, klik Edit, kemudian ubah "Default Module"
